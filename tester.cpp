@@ -4,6 +4,7 @@
 int main(int argc, char const *argv[])
 {
     EmojiTools emojitools;
+    
     std::cout << emojitools.getEmojiGroupsDelimitered(';') << std::endl;
     // Smileys & Emotion;People & Body;Component;Animals & Nature;Food & Drink;Travel & Places;Activities;Objects;Symbols;Flags
 
