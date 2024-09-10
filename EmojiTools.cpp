@@ -101,7 +101,7 @@ void EmojiTools::constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStruct
 
             // combine emoji character from code points
             char8_t buffer[32];
-            Utf8Tools utf8tools;
+            Utf8Tools::Utf8Tools utf8tools;
             char8_t *end = utf8tools.encodeUtf8Sequence(emojiCodePoints.data(), emojiCodePoints.size(), buffer);
             *end = '\0'; // Null-terminating the string
             // pr("\t"); pr("Emoji: "); pr(reinterpret_cast<char *>(buffer)); br();
@@ -172,7 +172,7 @@ std::string EmojiTools::getEmojiCodePoint(char32_t *emojiCodePoints, size_t leng
     if (m_isPopulated)
     {
         char8_t buffer[32];
-        Utf8Tools utf8tools;
+        Utf8Tools::Utf8Tools utf8tools;
         char8_t *end = utf8tools.encodeUtf8Sequence(emojiCodePoints, length, buffer);
         *end = '\0'; // Null-terminating the string
         return std::string(reinterpret_cast<char *>(buffer));
@@ -450,7 +450,7 @@ std::string EmojiTools::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
 void EmojiTools::printEmojiCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     char8_t buffer[32];
-    Utf8Tools utf8tools;
+    Utf8Tools::Utf8Tools utf8tools;
     char8_t *end = utf8tools.encodeUtf8Sequence(emojiCodePoints, length, buffer);
     *end = '\0'; // Null-terminating the string
     std::cout << reinterpret_cast<char *>(buffer);

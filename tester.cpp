@@ -1,10 +1,10 @@
 #include <iostream>
 #include "EmojiTools.hpp"
 
-int main(int argc, char const *argv[])
+int main()
 {
     EmojiTools emojitools;
-    
+
     std::cout << emojitools.getEmojiGroupsDelimitered(';') << std::endl;
     // Smileys & Emotion;People & Body;Component;Animals & Nature;Food & Drink;Travel & Places;Activities;Objects;Symbols;Flags
 
