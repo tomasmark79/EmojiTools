@@ -1,6 +1,6 @@
 // EmojiTools.cpp
 #include "EmojiTools.hpp"
-#include "assets/emoji-test.h"
+#include "assets/emoji-test.hpp"
 #include "Utf8Tools.hpp"
 #include "hlog.hpp"
 
