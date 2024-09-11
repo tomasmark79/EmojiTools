@@ -3,7 +3,7 @@
 C++ module for simple work with Unicode Emojis
  - You may to get Unicode Emoji string
    - by codepoint number 🎯
-   - by combinec codepoints 🎯
+   - by combined codepoints with selectors 🎯
    - by group name 🎯
    - by sub group name 🎯
  - You may to get Emoji group or sub group list
