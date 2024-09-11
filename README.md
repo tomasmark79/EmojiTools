@@ -1,60 +1,54 @@
 # Emoji Tools 😉🪄🎯
 
-C++ module for simple work with the Unicode defined Emojis
- - utf8 support
+C++ module for simple work with Unicode Emojis
  - You may to get Unicode Emoji string
-   - by codepoints 🎯
+   - by codepoint number 🎯
+   - by combinec codepoints 🎯
    - by group name 🎯
    - by sub group name 🎯
  - You may to get Emoji group or sub group list
- 
-The C++ module is using official document by Unicode organisation as the source definition.
+ - You may get Emoji group or sub group list with the description and the Unicode version
+ - ...
 
-## How to call examples
+## How to use
+
+An examples how to call and retrieve Emojis can be found within the TEST method.
 
 ```cpp
-EmojiTools emojitools;
+int main()
+{
+    EmojiTools::EmojiTools emojitools;
 
-std::cout << emojitools.getEmojiGroupsDelimitered(';') << std::endl;
-// Smileys & Emotion;People & Body;Component;Animals & Nature;Food & Drink;Travel & Places;Activities;Objects;Symbols;Flags
+    emojitools.TEST();
 
-std::cout << emojitools.getEmojiGroupsDelimitered('\n') << std::endl;      // new line delimiter
-std::vector<std::string> vecEmojiGroups = emojitools.getEmojiGroupsList(); // get the list of emoji groups
+    return 0;
+}
+```
 
-std::cout << emojitools.getEmojiSubGroupsDelimitered(';') << std::endl;
-// face-smiling;face-affection;face-tongue;face-hand;face-neutral-skeptical;face-sleepy;face-unwell;face-hat;face-glasses;
-// ace-concerned;face-negative;face-costume;cat-face;monkey-face;heart;emotion;hand-fingers-open;hand-fingers-partial;
-// hand-single-finger;hand-fingers-closed;hands;hand-prop;body-parts;person;person-gesture;person-role;person-fantasy;
-// person-activity;person-sport;person-resting;family;person-symbol;skin-tone;hair-style;animal-mammal;animal-bird;
-// animal-amphibian;animal-reptile;animal-marine;animal-bug;plant-flower;plant-other;food-fruit;food-vegetable;food-prepared;
-// ood-asian;food-marine;food-sweet;drink;dishware;place-map;place-geographic;place-building;place-religious;place-other;
-// transport-ground;transport-water;transport-air;hotel;time;sky & weather;event;award-medal;sport;game;arts & crafts;
-// clothing;sound;music;musical-instrument;phone;computer;light & video;book-paper;money;mail;writing;office;lock;tool;
-// science;medical;household;other-object;transport-sign;warning;arrow;religion;zodiac;av-symbol;gender;math;punctuation;
-// currency;other-symbol;keycap;alphanum;geometric;flag;country-flag;subdivision-flagmm
+### awaited output
 
-std::cout << emojitools.getEmojiSubGroupsDelimitered('\n') << std::endl;         // new line delimiter
-std::vector<std::string> vecEmojiSubGroups = emojitools.getEmojiSubGroupsList(); // get the list of emoji sub groups
-
-std::cout << emojitools.getEmojiesFromGroup("Smileys & Emotion") << std::endl;
-// 😀😃😄😁😆😅🤣😂🙂🙃🫠😉😊😇🥰😍🤩😘😗 ...
-
-std::cout << emojitools.getEmojiesFromSubGroup("warning") << std::endl;
-// ⚠️⚠🚸⛔🚫🚳🚭🚯🚱🚷📵🔞☢️☢☣️☣
-
-std::cout << emojitools.getEmojiesFromSubGroup("game") << std::endl;
-// 🎯🪀🪁🔫🎱🔮🪄🎮🕹️🕹🎰🎲🧩🧸🪅🪩🪆♠️♠♥️♥♦️♦♣️♣♟️♟🃏🀄🎴
-
-std::cout << emojitools.getEmojiesFromSubGroup("drink") << std::endl;
-// 🍼🥛☕🫖🍵🍶🍾🍷🍸🍹🍺🍻🥂🥃🫗🥤🧋🧃🧉🧊
-
-int groupSize = emojitools.getEmojiGroupSize("Smileys & Emotion");
-
-std::cout << std::endl
-          << groupSize << std::endl;
-std::cout << "Smileys & Emotion group size: " << emojitools.getEmojiByIndexFromGroup("Smileys & Emotion", groupSize - 1) << std::endl;
-
-std::cout << "Random emoji from Smileys & Emotion group: " << emojitools.getRandomEmojiFromGroup("Smileys & Emotion") << std::endl;
+```txt
+START - Visual TEST
+Emoji Groups List: Smileys & Emotion;People & Body;Component;Animals & Nature;Food & Drink;Travel & Places;Activities;Objects;Symbols;Flags
+😀❤‍❤‍🔥❤️‍🔥🧑🏿‍🦯‍➡️😀😃😄😁😆😅🤣😂🙂🙃🫠😉😊😇🥰😍🤩😘😗☺️☺😚😙🥲😋😛😜🤪😝🤑🤗🤭🫢🫣🤫🤔🫡🤐🤨😐😑😶🫥😶‍🌫️😶‍🌫😏😒🙄😬😮‍💨🤥🫨🙂‍↔️🙂‍↔🙂‍↕️🙂‍↕😌😔😪🤤😴😷🤒🤕🤢🤮🤧🥵🥶🥴😵😵‍💫🤯🤠🥳🥸😎🤓🧐😕🫤😟🙁☹️☹😮😯😲😳🥺🥹😦😧😨😰😥😢😭😱😖😣😞😓😩😫🥱😤😡😠🤬😈👿💀☠️☠💩🤡👹👺👻👽👾🤖😺😸😹😻😼😽🙀😿😾🙈🙉🙊💌💘💝💖💗💓💞💕💟❣️❣💔❤️‍🔥❤‍🔥❤️‍🩹❤‍🩹❤️❤🩷🧡💛💚💙🩵💜🤎🖤🩶🤍💋💯💢💥💫💦💨🕳️🕳💬👁️‍🗨️👁‍🗨️👁️‍🗨👁‍🗨🗨️🗨🗯️🗯💭💤
+⚠️⚠🚸⛔🚫🚳🚭🚯🚱🚷📵🔞☢️☢☣️☣
+Emoji: ⚠️         Group: Symbols | Subgroup: warning | Description: warning | Unicode version: E0.6
+Emoji: ⚠         Group: Symbols | Subgroup: warning | Description: warning | Unicode version: E0.6
+Emoji: 🚸        Group: Symbols | Subgroup: warning | Description: children crossing | Unicode version: E1.0
+Emoji: ⛔        Group: Symbols | Subgroup: warning | Description: no entry | Unicode version: E0.6
+Emoji: 🚫        Group: Symbols | Subgroup: warning | Description: prohibited | Unicode version: E0.6
+Emoji: 🚳        Group: Symbols | Subgroup: warning | Description: no bicycles | Unicode version: E1.0
+Emoji: 🚭        Group: Symbols | Subgroup: warning | Description: no smoking | Unicode version: E0.6
+Emoji: 🚯        Group: Symbols | Subgroup: warning | Description: no littering | Unicode version: E1.0
+Emoji: 🚱        Group: Symbols | Subgroup: warning | Description: non-potable water | Unicode version: E1.0
+Emoji: 🚷        Group: Symbols | Subgroup: warning | Description: no pedestrians | Unicode version: E1.0
+Emoji: 📵        Group: Symbols | Subgroup: warning | Description: no mobile phones | Unicode version: E1.0
+Emoji: 🔞        Group: Symbols | Subgroup: warning | Description: no one under eighteen | Unicode version: E0.6
+Emoji: ☢️         Group: Symbols | Subgroup: warning | Description: radioactive | Unicode version: E1.0
+Emoji: ☢         Group: Symbols | Subgroup: warning | Description: radioactive | Unicode version: E1.0
+Emoji: ☣️         Group: Symbols | Subgroup: warning | Description: biohazard | Unicode version: E1.0
+Emoji: ☣         Group: Symbols | Subgroup: warning | Description: biohazard | Unicode version: E1.0
+END - Visual TEST
 ```
 
 ## Licence
