@@ -73,14 +73,6 @@ int main()
               << emojiWrapper.getEmojiSubGroupDescription("face-smiling")
               << std::endl;
 
-    
-    
-    
-    
-    
-    
-    
-    
     return 0;
 }
 

@@ -427,7 +427,6 @@ std::string EmojiTransmitter::getEmojiGroupDescription(std::string emojiGroup)
     }
     return ss.str();
 }
-
 std::string EmojiTransmitter::getEmojiSubGroupDescription(std::string emojiSubGroup)
 {
     std::stringstream ss;
@@ -453,6 +452,8 @@ std::string EmojiTransmitter::getEmojiSubGroupDescription(std::string emojiSubGr
     }
     return ss.str();
 }
+
+
 
 void EmojiTransmitter::printEmojiGroup(std::string emojiGroup)
 {

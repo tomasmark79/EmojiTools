@@ -48,29 +48,25 @@ public:
     bool m_isPopulated{false};
 
 private:
-
     /// @brief Construct a new EmojiTools object
     /// @param epm std::map
     /// @param file std::ifstream
     void constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStructure> &epm, std::istream &file);
 
-     /// @brief load emoji asset file from hardcoded header file
+    /// @brief load emoji asset file from hardcoded header file
     /// @return std::sstringstream if successful
     std::istringstream loadEmojiAssetsFromHardcodedHeader();
 
     /// @brief load emoji asset file from assets folder
     /// @return std::ifstream if successful else library exits
     std::ifstream loadEmojiAssetsFromFile();
-
-    
 };
 
 class EmojiTransmitter
 {
 public:
-
     EmojiTransmitter() = default;
-    
+
     EmojiBuilder emojiBuilder;
 
 public:
@@ -98,20 +94,16 @@ public:
     std::string getEmojiStringByIndexFromGroup(std::string emojiGroup, int index);
     // get emoji std::string character by index from subgroup
     std::string getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index);
-    
+    // get emoji group description
     std::string getEmojiGroupDescription(std::string emojiGroup);
-    
+    // get emoji subgroup description
     std::string getEmojiSubGroupDescription(std::string emojiSubGroup);
-    
-    
+
     // TODO
 
     // Get emoji by name
     // Get emoji by description
     // Get emoji by unicode version
-
-
-
 
     void printEmojiGroup(std::string emojiGroup);
     void printEmojiSubGroupWDescription(std::string emojiSubGroup);
@@ -120,7 +112,6 @@ public:
     void printGroupsText();
     void printSubGroupsText();
     void printEmojiDescription(std::string emojiDescription);
-
 };
 
 #endif // __EMOJITOOLS_H__
