@@ -6,19 +6,19 @@
 int main()
 {
     // use factory pattern
-
     EmojiFactory* smileyFactory = new SmileyFactory();
-    EmojiFactory* winkyFactory = new WinkyFactory();
+    EmojiFactory* poepleFactory = new PoepleFactory();
 
     Emoji* smiley = smileyFactory->createEmoji();
-    Emoji* winky = winkyFactory->createEmoji();
+    Emoji* poeple = poepleFactory->createEmoji();
 
     std::cout << smiley->getRandom();
+    std::cout << poeple->getRandom();
     
     delete smileyFactory;
-    delete winkyFactory;
+    delete poepleFactory;
     delete smiley;
-    delete winky;
+    delete poeple;
 
     return 0;
    
