@@ -9,7 +9,7 @@
 #include "assets/emoji-test.hpp" // Unicode defition of emojis converted to source code
 #include "EmojiTools.hpp"
 
-namespace EmojiTools
+namespace EmojiParser
 {
 
     /// @brief Construct a new EmojiTools object

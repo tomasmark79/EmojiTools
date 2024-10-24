@@ -78,7 +78,7 @@ namespace Utf8Tools
     };
 } // namespace Utf8Tools
 
-namespace EmojiTools
+namespace EmojiParser
 {
     class EmojiTools
     {
