@@ -1,5 +1,8 @@
 # Emoji Tools 😉🪄🎯
 
+# ToDo
+Implement factory pattern
+
 C++ module for simple work with Unicode Emojis
  - You may to get Unicode Emoji string
    - by codepoint number 🎯
