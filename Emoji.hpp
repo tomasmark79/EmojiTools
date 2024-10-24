@@ -89,6 +89,18 @@ public:
         return et.getEmojiStringByIndexFromSubGroup(emojiSubGroup, index);
     }
 
+    // get emoji group description
+    std::string getEmojiGroupDescription(const std::string emojiGroup)
+    {
+        return et.getEmojiGroupDescription(emojiGroup);
+    }
+
+    // get emoji subgroup description
+    std::string getEmojiSubGroupDescription(const std::string emojiSubGroup)
+    {
+        return et.getEmojiSubGroupDescription(emojiSubGroup);
+    }
+
 
 
 

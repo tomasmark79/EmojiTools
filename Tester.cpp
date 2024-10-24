@@ -61,12 +61,26 @@ int main()
               << emojiWrapper.getEmojiStringByIndexFromSubGroup("face-smiling", 5)
               << std::endl;
 
+    // get emoji group and subgroup description
 
+    std::cout << "get group description Smileys & Emotion = "
+              << std::endl
+              << emojiWrapper.getEmojiGroupDescription("Smileys & Emotion")
+              << std::endl;
 
+    std::cout << "get subgroup description face-smiling = "
+              << std::endl
+              << emojiWrapper.getEmojiSubGroupDescription("face-smiling")
+              << std::endl;
 
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
     return 0;
 }
 

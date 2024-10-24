@@ -98,15 +98,21 @@ public:
     std::string getEmojiStringByIndexFromGroup(std::string emojiGroup, int index);
     // get emoji std::string character by index from subgroup
     std::string getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index);
-
-    // TODO
     
+    std::string getEmojiGroupDescription(std::string emojiGroup);
+    
+    std::string getEmojiSubGroupDescription(std::string emojiSubGroup);
+    
+    
+    // TODO
+
     // Get emoji by name
     // Get emoji by description
     // Get emoji by unicode version
 
 
-    void printEmojiGroupWDescription(std::string emojiGroup);
+
+
     void printEmojiGroup(std::string emojiGroup);
     void printEmojiSubGroupWDescription(std::string emojiSubGroup);
     void printEmojiSubGroup(std::string emojiSubGroup);

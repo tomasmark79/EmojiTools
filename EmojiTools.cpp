@@ -402,31 +402,58 @@ std::string EmojiTransmitter::getEmojiStringByIndexFromSubGroup(std::string emoj
     }
     return "";
 }
-
-
-
-void EmojiTransmitter::printEmojiGroupWDescription(std::string emojiGroup)
+std::string EmojiTransmitter::getEmojiGroupDescription(std::string emojiGroup)
 {
+    std::stringstream ss;
+
     if (emojiBuilder.m_isPopulated)
     {
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
             if (epm.second.m_emojiGroup == emojiGroup)
             {
-                std::cout << ("Emoji: ");
-                getEmojiChar8_tCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-                std::cout << "\t Group: ";
-                std::cout << epm.second.m_emojiGroup;
-                std::cout << " | Subgroup: ";
-                std::cout << epm.second.m_emojiSubGroup;
-                std::cout << " | Description: ";
-                std::cout << epm.second.m_emojiTextDescription;
-                std::cout << " | Unicode version: ";
-                std::cout << epm.second.m_emojiUnicodeVersion << std::endl;
+                ss << "Emoji: "
+                << getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size())
+                << "\t Group: "
+                << epm.second.m_emojiGroup
+                << " | Subgroup: "
+                << epm.second.m_emojiSubGroup
+                << " | Description: "
+                << epm.second.m_emojiTextDescription
+                << " | Unicode version: "
+                << epm.second.m_emojiUnicodeVersion << std::endl;
             }
         }
     }
+    return ss.str();
 }
+
+std::string EmojiTransmitter::getEmojiSubGroupDescription(std::string emojiSubGroup)
+{
+    std::stringstream ss;
+
+    if (emojiBuilder.m_isPopulated)
+    {
+        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
+        {
+            if (epm.second.m_emojiSubGroup == emojiSubGroup)
+            {
+                ss << "Emoji: "
+                << getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size())
+                << "\t Group: "
+                << epm.second.m_emojiGroup
+                << " | Subgroup: "
+                << epm.second.m_emojiSubGroup
+                << " | Description: "
+                << epm.second.m_emojiTextDescription
+                << " | Unicode version: "
+                << epm.second.m_emojiUnicodeVersion << std::endl;
+            }
+        }
+    }
+    return ss.str();
+}
+
 void EmojiTransmitter::printEmojiGroup(std::string emojiGroup)
 {
     if (emojiBuilder.m_isPopulated)
@@ -440,28 +467,7 @@ void EmojiTransmitter::printEmojiGroup(std::string emojiGroup)
         }
     }
 }
-void EmojiTransmitter::printEmojiSubGroupWDescription(std::string emojiSubGroup)
-{
-    if (emojiBuilder.m_isPopulated)
-    {
-        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
-        {
-            if (epm.second.m_emojiSubGroup == emojiSubGroup)
-            {
-                std::cout << "Emoji: ";
-                getEmojiChar8_tCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-                std::cout << "\t Group: ";
-                std::cout << epm.second.m_emojiGroup;
-                std::cout << " | Subgroup: ";
-                std::cout << epm.second.m_emojiSubGroup;
-                std::cout << " | Description: ";
-                std::cout << epm.second.m_emojiTextDescription;
-                std::cout << " | Unicode version: ";
-                std::cout << epm.second.m_emojiUnicodeVersion << std::endl;
-            }
-        }
-    }
-}
+
 void EmojiTransmitter::printEmojiSubGroup(std::string emojiSubGroup)
 {
     if (emojiBuilder.m_isPopulated)
