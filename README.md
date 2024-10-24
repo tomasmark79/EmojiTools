@@ -2,12 +2,9 @@
 
 ```cpp
 #include "Emoji.hpp" // wrapper class for EmojiParser namespace
-#include <iostream>
 
-int main()
-{
     // HOW TO USE EmojiWrapper
-    
+
     Emoji /*💋*/ emojiWrapper;
 
     // get emoji by codepoints
@@ -36,9 +33,12 @@ int main()
     std::cout << emojiWrapper.getRandomEmojiFromGroup("Smileys & Emotion") << std::endl;
     std::cout << emojiWrapper.getRandomEmojiFromSubGroup("face-smiling") << std::endl;
 
+    // get list of names of emoji groups and subgroups
+    std::vector<std::string> emojiGroups = emojiWrapper.getEmojiGroups();
+        std::cout << "Emoji groups: " << emojiGroups.size() << std::endl;
+    std::vector<std::string> emojiSubGroups = emojiWrapper.getEmojiSubGroups();
+        std::cout << "Emoji sub-groups: " << emojiSubGroups.size() << std::endl;
 
 
-    return 0;
-}
 ```
 
