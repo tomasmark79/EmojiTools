@@ -9,9 +9,56 @@
 #include "assets/emoji-test.hpp" // Unicode defition of emojis converted to source code
 #include "EmojiTools.hpp"
 
+namespace Utf8Tools
+{
+    char8_t *Utf8Tools::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
+    {
+        constexpr auto byte = [](char32_t x)
+        {
+            assert(x <= 0x100); // 256
+            return static_cast<char8_t>(x);
+        };
+
+        char32_t continuation = 0b1000'0000; // 128
+        if (emojiCodePoint >= 65536)
+        {
+            *buffer8++ = byte(0b1111'0000 | (emojiCodePoint >> 18));
+            *buffer8++ = byte(continuation | ((emojiCodePoint >> 12) & 0b0011'1111));
+            *buffer8++ = byte(continuation | ((emojiCodePoint >> 6) & 0b0011'1111));
+            *buffer8++ = byte(continuation | (emojiCodePoint & 0b0011'1111));
+        }
+        else if (emojiCodePoint >= 2048)
+        {
+            *buffer8++ = byte(0b1110'0000 | (emojiCodePoint >> 12));
+            *buffer8++ = byte(continuation | ((emojiCodePoint >> 6) & 0b0011'1111));
+            *buffer8++ = byte(continuation | (emojiCodePoint & 0b0011'1111));
+        }
+        else if (emojiCodePoint >= 128)
+        {
+            *buffer8++ = byte(0b1100'0000 | (emojiCodePoint >> 6));
+            *buffer8++ = byte(continuation | (emojiCodePoint & 0b0011'1111));
+        }
+        else
+        {
+            *buffer8++ = byte(emojiCodePoint);
+        }
+
+        return buffer8;
+    }
+
+    char8_t *Utf8Tools::encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length, char8_t *buffer8)
+    {
+        for (size_t i = 0; i < length; ++i)
+        {
+            buffer8 = encodeUtf8(emojiCodePoints[i], buffer8);
+        }
+        return buffer8;
+    }
+
+}
+
 namespace EmojiParser
 {
-
     /// @brief Construct a new EmojiTools object
     /// @param epm std::map
     /// @param file std::ifstream
@@ -164,7 +211,7 @@ namespace EmojiParser
     /// @param emojiCodePoints as array of char32_t
     /// @param length size_t of emojiCodePoints
     /// @return std::string Emoji character
-    std::string EmojiTools::getEmojiCodePoint(char32_t *emojiCodePoints, size_t length)
+    std::string EmojiTools::getEmojiByCodePoint(char32_t *emojiCodePoints, size_t length)
     {
         if (m_isPopulated)
         {
@@ -178,38 +225,9 @@ namespace EmojiParser
             return "";
     }
 
-    /// @brief get all emoji groups delimitered
-    /// @param delimiter char32_t examples: ',' ';' '\n', etc.
-    /// @return std::string of emoji groups delimitered
-    std::string EmojiTools::getEmojiGroupsDelimitered(char32_t delimiter)
-    {
-        if (m_isPopulated)
-        {
-            std::vector<std::string> vecGroups;
-            std::string stringDelimiteredGroups;
-            for (auto &epm : m_emojiPropertiesMap)
-            {
-                if (std::find(vecGroups.begin(), vecGroups.end(), epm.second.m_emojiGroup) == vecGroups.end())
-                {
-                    vecGroups.push_back(epm.second.m_emojiGroup); // Groups map source
-                }
-            }
-            for (auto &groupItem : vecGroups)
-            {
-                stringDelimiteredGroups += groupItem;
-                if (groupItem != vecGroups.back())
-                {
-                    stringDelimiteredGroups += delimiter;
-                }
-            }
-            return stringDelimiteredGroups;
-        }
-        return "";
-    }
-
     /// @brief get all emoji groups list
     /// @return std::vector of emoji groups
-    std::vector<std::string> EmojiTools::getEmojiGroupsList()
+    std::vector<std::string> EmojiTools::getEmojiGroupsNames()
     {
         if (m_isPopulated)
         {
@@ -227,38 +245,9 @@ namespace EmojiParser
         return {};
     }
 
-    /// @brief get all emoji subgroups delimitered
-    /// @param delimiter char32_t examples: ',' ';' '\n', etc.
-    /// @return std::string of emoji subgroups delimitered
-    std::string EmojiTools::getEmojiSubGroupsDelimitered(char32_t delimiter)
-    {
-        if (m_isPopulated)
-        {
-            std::vector<std::string> vecSubGroups;
-            std::string stringDelimiteredSubGroups;
-            for (auto &epm : m_emojiPropertiesMap)
-            {
-                if (std::find(vecSubGroups.begin(), vecSubGroups.end(), epm.second.m_emojiSubGroup) == vecSubGroups.end())
-                {
-                    vecSubGroups.push_back(epm.second.m_emojiSubGroup); // SubGroups map source
-                }
-            }
-            for (auto &subGroupItem : vecSubGroups)
-            {
-                stringDelimiteredSubGroups += subGroupItem;
-                if (subGroupItem != vecSubGroups.back())
-                {
-                    stringDelimiteredSubGroups += delimiter;
-                }
-            }
-            return stringDelimiteredSubGroups;
-        }
-        return "";
-    }
-
     /// @brief get all emoji subgroups list
     /// @return std::vector of emoji subgroups
-    std::vector<std::string> EmojiTools::getEmojiSubGroupsList()
+    std::vector<std::string> EmojiTools::getEmojiSubGroupsNames()
     {
         if (m_isPopulated)
         {
@@ -288,29 +277,12 @@ namespace EmojiParser
             {
                 if (epm.second.m_emojiGroup == emojiGroup)
                 {
-                    emojis += getEmojiCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                    emojis += getEmojiByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
                 }
             }
             return emojis;
         }
         return "";
-    }
-
-    int EmojiTools::getEmojiGroupSize(std::string emojiGroup)
-    {
-        if (m_isPopulated)
-        {
-            int count = 0;
-            for (auto &epm : m_emojiPropertiesMap)
-            {
-                if (epm.second.m_emojiGroup == emojiGroup)
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-        return 0;
     }
 
     /// @brief get emoji by index from group - 1 based index
@@ -325,7 +297,7 @@ namespace EmojiParser
                 {
                     if (count == index)
                     {
-                        return getEmojiCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                        return getEmojiByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
                     }
                     count++;
                 }
@@ -341,7 +313,7 @@ namespace EmojiParser
             int count = 0;
             std::random_device rd;
             std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(1, getEmojiGroupSize(emojiGroup) - 1);
+            std::uniform_int_distribution<> dis(1, getSizeOfGroupItems(emojiGroup) - 1);
             int randomIndex = dis(gen);
 
             for (auto &epm : m_emojiPropertiesMap)
@@ -350,7 +322,7 @@ namespace EmojiParser
                 {
                     if (count == randomIndex)
                     {
-                        return getEmojiCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                        return getEmojiByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
                     }
                     count++;
                 }
@@ -371,7 +343,7 @@ namespace EmojiParser
             {
                 if (epm.second.m_emojiSubGroup == emojiSubGroup)
                 {
-                    emojis += getEmojiCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                    emojis += getEmojiByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
                 }
             }
             return emojis;
@@ -379,7 +351,23 @@ namespace EmojiParser
         return "";
     }
 
-    int EmojiTools::getEmojiSubGroupSize(std::string emojiSubGroup)
+    int EmojiTools::getSizeOfGroupItems(std::string emojiGroup)
+    {
+        if (m_isPopulated)
+        {
+            int count = 0;
+            for (auto &epm : m_emojiPropertiesMap)
+            {
+                if (epm.second.m_emojiGroup == emojiGroup)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+        return 0;
+    }
+    int EmojiTools::getSizeOfSubGroupItems(std::string emojiSubGroup)
     {
         if (m_isPopulated)
         {
@@ -407,7 +395,7 @@ namespace EmojiParser
                 {
                     if (count == index)
                     {
-                        return getEmojiCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                        return getEmojiByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
                     }
                     count++;
                 }
@@ -423,7 +411,7 @@ namespace EmojiParser
             int count = 0;
             std::random_device rd;
             std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(1, getEmojiSubGroupSize(emojiSubGroup) - 1);
+            std::uniform_int_distribution<> dis(1, getSizeOfSubGroupItems(emojiSubGroup) - 1);
             int randomIndex = dis(gen);
 
             for (auto &epm : m_emojiPropertiesMap)
@@ -432,7 +420,7 @@ namespace EmojiParser
                 {
                     if (count == randomIndex)
                     {
-                        return getEmojiCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                        return getEmojiByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
                     }
                     count++;
                 }
@@ -548,32 +536,32 @@ namespace EmojiParser
         }
     }
 
-    std::string EmojiTools::getSubGroupsText(std::string delimiter)
-    {
-        if (m_isPopulated)
-        {
-            std::vector<std::string> subgroups;
-            std::string strSubGroups;
-            for (auto &epm : m_emojiPropertiesMap)
-            {
-                if (std::find(subgroups.begin(), subgroups.end(), epm.second.m_emojiSubGroup) == subgroups.end())
-                {
-                    subgroups.push_back(epm.second.m_emojiSubGroup);
-                }
-            }
+    // std::string EmojiTools::getSubGroupsText(std::string delimiter)
+    // {
+    //     if (m_isPopulated)
+    //     {
+    //         std::vector<std::string> subgroups;
+    //         std::string strSubGroups;
+    //         for (auto &epm : m_emojiPropertiesMap)
+    //         {
+    //             if (std::find(subgroups.begin(), subgroups.end(), epm.second.m_emojiSubGroup) == subgroups.end())
+    //             {
+    //                 subgroups.push_back(epm.second.m_emojiSubGroup);
+    //             }
+    //         }
 
-            for (auto &group : subgroups)
-            {
-                strSubGroups += group;
-                if (group != subgroups.back())
-                {
-                    strSubGroups += delimiter;
-                }
-            }
-            return strSubGroups;
-        }
-        return "";
-    }
+    //         for (auto &group : subgroups)
+    //         {
+    //             strSubGroups += group;
+    //             if (group != subgroups.back())
+    //             {
+    //                 strSubGroups += delimiter;
+    //             }
+    //         }
+    //         return strSubGroups;
+    //     }
+    //     return "";
+    // }
 
     void EmojiTools::printSubGroupsText()
     {
@@ -596,66 +584,10 @@ namespace EmojiParser
         }
     }
 
-    void EmojiTools::TEST()
-    {
-        std::cout << "START - Visual TEST" << std::endl;
+    //      printEmojiSubGroupWDescription("warning");
 
-        // print emoji group with description
-        std::cout << "Emoji Groups List: " << getEmojiGroupsDelimitered(';') << std::endl; // delimiter may be also '\n'
-
-        // simple codepoint - should be supported by all platforms
-        char32_t emojiCodePoint[1] = {0x1F600}; // 😀
-        printEmojiCodePointChar32_t(emojiCodePoint, 1);
-
-        // advanced codepoint combination - may be not supported by all platforms
-        char32_t emojiCodePointWSelector[2] = {0x2764, 0x200D}; // ❤‍❤‍
-        printEmojiCodePointChar32_t(emojiCodePointWSelector, 2);
-
-        // advanced codepoint combination - may be not supported by all platforms
-        char32_t emojiCodePointWSelector3[3] = {0x2764, 0x200D, 0x1F525}; // ❤‍🔥❤‍🔥
-        
-        printEmojiCodePointChar32_t(emojiCodePointWSelector3, 3);
-
-        // advanced codepoint combination - may be not supported by all platforms
-        char32_t emojiCodePointWSelector4[4] = {0x2764, 0xFE0F, 0x200D, 0x1F525}; // ❤‍🔥❤‍🔥
-        printEmojiCodePointChar32_t(emojiCodePointWSelector4, 4);
-
-        // advanced codepoint combination - may be not supported by all platforms
-        char32_t emojiCodePointWSelector7[7] = {0x1F9D1, 0x1F3FF, 0x200D, 0x1F9AF, 0x200D, 0x27A1, 0xFE0F}; // 🧑🏿‍🦯‍➡️🧑🏿‍🦯‍➡️
-        printEmojiCodePointChar32_t(emojiCodePointWSelector7, 7);
-
-        // show emoji group
-        std::cout << getEmojiesFromGroup("Smileys & Emotion") << std::endl;
-        // 😀😃😄😁😆😅🤣😂🙂🙃🫠😉😊😇🥰😍🤩😘😗 ...
-
-        // show emoji subgroup
-        std::cout << getEmojiesFromSubGroup("warning") << std::endl;
-        // ⚠️⚠🚸⛔🚫🚳🚭🚯🚱🚷📵🔞☢️☢☣️☣
-
-        printEmojiSubGroupWDescription("warning");
-
-        std::cout << "END - Visual TEST" << std::endl;
-    }
 }
 
 // MIT License
 //
 // Copyright (c) 2024 Tomas Mark
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.

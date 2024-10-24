@@ -40,6 +40,15 @@ int main()
     std::vector<std::string> emojiSubGroups = emojiWrapper.getEmojiSubGroups();
         std::cout << "Emoji sub-groups: " << emojiSubGroups.size() << std::endl;
 
+    // get number of items in a emoji group or subgroup
+    std::cout << "Number of items in group Smileys & Emotion = "
+              << emojiWrapper.getSizeOfGroupItems("Smileys & Emotion")
+              << std::endl;
+    
+    std::cout << "Number of items in subgroup face-smiling = "
+                << emojiWrapper.getSizeOfSubGroupItems("face-smiling")
+                << std::endl;
+
 
 
 
