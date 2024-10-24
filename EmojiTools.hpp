@@ -45,9 +45,9 @@ public:
     std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
     char8_t getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length);
 
-private:
-
     bool m_isPopulated{false};
+
+private:
 
     /// @brief Construct a new EmojiTools object
     /// @param epm std::map
@@ -112,8 +112,6 @@ public:
     void printSubGroupsText();
     void printEmojiDescription(std::string emojiDescription);
 
-private:
-    bool m_isPopulated{false};
 };
 
 #endif // __EMOJITOOLS_H__

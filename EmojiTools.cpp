@@ -166,7 +166,7 @@ void EmojiBuilder::constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStru
         epm.insert(std::pair<int, EmojiPropertiesStructure>(mapKey++, eps));
 
         // ***
-        m_isPopulated = true;
+        this->m_isPopulated = true;
     }
 }
 std::istringstream EmojiBuilder::loadEmojiAssetsFromHardcodedHeader()
@@ -210,7 +210,6 @@ char8_t EmojiBuilder::getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, 
     return *buffer;
 }
 
-
 std::string EmojiTransmitter::getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     return emojiBuilder.getEmojiStringCharByCodePoint(emojiCodePoints, length);
@@ -221,7 +220,7 @@ char8_t EmojiTransmitter::getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoin
 }
 std::vector<std::string> EmojiTransmitter::getEmojiGroupsNames()
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         std::vector<std::string> vecGroups;
 
@@ -238,7 +237,7 @@ std::vector<std::string> EmojiTransmitter::getEmojiGroupsNames()
 }
 std::vector<std::string> EmojiTransmitter::getEmojiSubGroupsNames()
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         std::vector<std::string> vecSubGroups;
 
@@ -255,7 +254,7 @@ std::vector<std::string> EmojiTransmitter::getEmojiSubGroupsNames()
 }
 std::string EmojiTransmitter::getEmojiesFromGroup(std::string emojiGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         std::string emojis = "";
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -271,7 +270,7 @@ std::string EmojiTransmitter::getEmojiesFromGroup(std::string emojiGroup)
 }
 std::string EmojiTransmitter::getEmojiByIndexFromGroup(std::string emojiGroup, int index)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         int count = 0;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -290,7 +289,7 @@ std::string EmojiTransmitter::getEmojiByIndexFromGroup(std::string emojiGroup, i
 }
 std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         int count = 0;
         std::random_device rd;
@@ -314,7 +313,7 @@ std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
 }
 std::string EmojiTransmitter::getEmojiesFromSubGroup(std::string emojiSubGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         std::string emojis = "";
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -330,7 +329,7 @@ std::string EmojiTransmitter::getEmojiesFromSubGroup(std::string emojiSubGroup)
 }
 int EmojiTransmitter::getSizeOfGroupItems(std::string emojiGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         int count = 0;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -346,7 +345,7 @@ int EmojiTransmitter::getSizeOfGroupItems(std::string emojiGroup)
 }
 int EmojiTransmitter::getSizeOfSubGroupItems(std::string emojiSubGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         int count = 0;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -362,7 +361,7 @@ int EmojiTransmitter::getSizeOfSubGroupItems(std::string emojiSubGroup)
 }
 std::string EmojiTransmitter::getEmojiByIndexFromSubGroup(std::string emojiSubGroup, int index)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         int count = 0;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -381,7 +380,7 @@ std::string EmojiTransmitter::getEmojiByIndexFromSubGroup(std::string emojiSubGr
 }
 std::string EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         int count = 0;
         std::random_device rd;
@@ -405,7 +404,7 @@ std::string EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGro
 }
 void EmojiTransmitter::printEmojiGroupWDescription(std::string emojiGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
@@ -427,7 +426,7 @@ void EmojiTransmitter::printEmojiGroupWDescription(std::string emojiGroup)
 }
 void EmojiTransmitter::printEmojiGroup(std::string emojiGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
@@ -440,7 +439,7 @@ void EmojiTransmitter::printEmojiGroup(std::string emojiGroup)
 }
 void EmojiTransmitter::printEmojiSubGroupWDescription(std::string emojiSubGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
@@ -462,7 +461,7 @@ void EmojiTransmitter::printEmojiSubGroupWDescription(std::string emojiSubGroup)
 }
 void EmojiTransmitter::printEmojiSubGroup(std::string emojiSubGroup)
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
@@ -475,7 +474,7 @@ void EmojiTransmitter::printEmojiSubGroup(std::string emojiSubGroup)
 }
 void EmojiTransmitter::printGroupsText()
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         std::vector<std::string> groups;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
@@ -496,7 +495,7 @@ void EmojiTransmitter::printGroupsText()
 
 void EmojiTransmitter::printSubGroupsText()
 {
-    if (m_isPopulated)
+    if (emojiBuilder.m_isPopulated)
     {
         std::vector<std::string> subgroups;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
