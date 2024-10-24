@@ -12,11 +12,11 @@ int main()
 
     // char32_t emojiCodePoint[1] = {0x1F600}; // 😀
     std::cout << "get 😀 = "
-              << emojiWrapper.getEmojiByCodePoint((char32_t *)U"\U0001F600", 1)
+              << emojiWrapper.getEmojiStringCharByCodePoint((char32_t *)U"\U0001F600", 1)
               << std::endl;
 
     std::cout << "get 😶‍🌫️ = "
-              << emojiWrapper.getEmojiByCodePoint((char32_t *)U"\U0001F636\U0000200D\U0001F32B\U0000FE0F", 4)
+              << emojiWrapper.getEmojiStringCharByCodePoint((char32_t *)U"\U0001F636\U0000200D\U0001F32B\U0000FE0F", 4)
               << std::endl;
 
     // get all emojis from group or subgroup
