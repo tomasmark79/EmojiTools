@@ -613,6 +613,7 @@ namespace EmojiParser
 
         // advanced codepoint combination - may be not supported by all platforms
         char32_t emojiCodePointWSelector3[3] = {0x2764, 0x200D, 0x1F525}; // ❤‍🔥❤‍🔥
+        
         printEmojiCodePointChar32_t(emojiCodePointWSelector3, 3);
 
         // advanced codepoint combination - may be not supported by all platforms
