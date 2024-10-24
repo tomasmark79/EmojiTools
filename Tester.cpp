@@ -1,9 +1,10 @@
 #include "Emoji.hpp" // wrapper class for EmojiParser namespace
-
 #include <iostream>
 
 int main()
 {
+    // HOW TO USE EmojiWrapper
+    
     Emoji /*💋*/ emojiWrapper;
 
     // get emoji by codepoints
