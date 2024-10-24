@@ -30,6 +30,14 @@ public:
     {
         return emojiTools.getEmojiesFromSubGroup(emojiSubGroup);
     }
+    std::vector<std::string> getEmojiGroups()
+    {
+        return emojiTools.getEmojiGroupsList();
+    }
+    std::vector<std::string> getEmojiSubGroups()
+    {
+        return emojiTools.getEmojiSubGroupsList();
+    }
 
 private:
     EmojiParser::EmojiTools emojiTools;

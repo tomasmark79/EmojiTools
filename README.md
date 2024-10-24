@@ -12,6 +12,7 @@ int main()
 
     // get emoji by codepoints
 
+    // char32_t emojiCodePoint[1] = {0x1F600}; // 😀
     std::cout << "get 😀 = "
               << emojiWrapper.getEmojiByCodePoint((char32_t *)U"\U0001F600", 1)
               << std::endl;
@@ -34,6 +35,8 @@ int main()
 
     std::cout << emojiWrapper.getRandomEmojiFromGroup("Smileys & Emotion") << std::endl;
     std::cout << emojiWrapper.getRandomEmojiFromSubGroup("face-smiling") << std::endl;
+
+
 
     return 0;
 }

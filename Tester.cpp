@@ -1,14 +1,16 @@
 #include "Emoji.hpp" // wrapper class for EmojiParser namespace
 #include <iostream>
+#include <vector>
 
 int main()
 {
     // HOW TO USE EmojiWrapper
-    
+
     Emoji /*💋*/ emojiWrapper;
 
     // get emoji by codepoints
 
+    // char32_t emojiCodePoint[1] = {0x1F600}; // 😀
     std::cout << "get 😀 = "
               << emojiWrapper.getEmojiByCodePoint((char32_t *)U"\U0001F600", 1)
               << std::endl;
@@ -31,6 +33,25 @@ int main()
 
     std::cout << emojiWrapper.getRandomEmojiFromGroup("Smileys & Emotion") << std::endl;
     std::cout << emojiWrapper.getRandomEmojiFromSubGroup("face-smiling") << std::endl;
+
+    // get list of names of emoji groups and subgroups
+    std::vector<std::string> emojiGroups = emojiWrapper.getEmojiGroups();
+        std::cout << "Emoji groups: " << emojiGroups.size() << std::endl;
+    std::vector<std::string> emojiSubGroups = emojiWrapper.getEmojiSubGroups();
+        std::cout << "Emoji sub-groups: " << emojiSubGroups.size() << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return 0;
 }
