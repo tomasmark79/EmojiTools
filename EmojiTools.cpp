@@ -218,6 +218,86 @@ char8_t EmojiTransmitter::getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoin
 {
     return emojiBuilder.getEmojiChar8_tCharByCodePoint(emojiCodePoints, length);
 }
+std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
+{
+    if (emojiBuilder.m_isPopulated)
+    {
+        int count = 0;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(1, getSizeOfGroupItems(emojiGroup) - 1);
+        int randomIndex = dis(gen);
+
+        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
+        {
+            if (epm.second.m_emojiGroup == emojiGroup)
+            {
+                if (count == randomIndex)
+                {
+                    return emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                }
+                count++;
+            }
+        }
+    }
+    return "";
+}
+std::string EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
+{
+    if (emojiBuilder.m_isPopulated)
+    {
+        int count = 0;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(1, getSizeOfSubGroupItems(emojiSubGroup) - 1);
+        int randomIndex = dis(gen);
+
+        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
+        {
+            if (epm.second.m_emojiSubGroup == emojiSubGroup)
+            {
+                if (count == randomIndex)
+                {
+                    return emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                }
+                count++;
+            }
+        }
+    }
+    return "";
+}
+std::string EmojiTransmitter::getEmojiesFromGroup(std::string emojiGroup)
+{
+    if (emojiBuilder.m_isPopulated)
+    {
+        std::string emojis = "";
+        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
+        {
+            if (epm.second.m_emojiGroup == emojiGroup)
+            {
+                emojis += emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+            }
+        }
+        return emojis;
+    }
+    return "";
+}
+std::string EmojiTransmitter::getEmojiesFromSubGroup(std::string emojiSubGroup)
+{
+    if (emojiBuilder.m_isPopulated)
+    {
+        std::string emojis = "";
+        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
+        {
+            if (epm.second.m_emojiSubGroup == emojiSubGroup)
+            {
+                emojis += emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+            }
+        }
+        return emojis;
+    }
+    return "";
+}
 std::vector<std::string> EmojiTransmitter::getEmojiGroupsNames()
 {
     if (emojiBuilder.m_isPopulated)
@@ -252,81 +332,6 @@ std::vector<std::string> EmojiTransmitter::getEmojiSubGroupsNames()
     }
     return {};
 }
-std::string EmojiTransmitter::getEmojiesFromGroup(std::string emojiGroup)
-{
-    if (emojiBuilder.m_isPopulated)
-    {
-        std::string emojis = "";
-        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
-        {
-            if (epm.second.m_emojiGroup == emojiGroup)
-            {
-                emojis += emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-            }
-        }
-        return emojis;
-    }
-    return "";
-}
-std::string EmojiTransmitter::getEmojiByIndexFromGroup(std::string emojiGroup, int index)
-{
-    if (emojiBuilder.m_isPopulated)
-    {
-        int count = 0;
-        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
-        {
-            if (epm.second.m_emojiGroup == emojiGroup)
-            {
-                if (count == index)
-                {
-                    return emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-                }
-                count++;
-            }
-        }
-    }
-    return "";
-}
-std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
-{
-    if (emojiBuilder.m_isPopulated)
-    {
-        int count = 0;
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(1, getSizeOfGroupItems(emojiGroup) - 1);
-        int randomIndex = dis(gen);
-
-        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
-        {
-            if (epm.second.m_emojiGroup == emojiGroup)
-            {
-                if (count == randomIndex)
-                {
-                    return emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-                }
-                count++;
-            }
-        }
-    }
-    return "";
-}
-std::string EmojiTransmitter::getEmojiesFromSubGroup(std::string emojiSubGroup)
-{
-    if (emojiBuilder.m_isPopulated)
-    {
-        std::string emojis = "";
-        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
-        {
-            if (epm.second.m_emojiSubGroup == emojiSubGroup)
-            {
-                emojis += emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-            }
-        }
-        return emojis;
-    }
-    return "";
-}
 int EmojiTransmitter::getSizeOfGroupItems(std::string emojiGroup)
 {
     if (emojiBuilder.m_isPopulated)
@@ -359,7 +364,26 @@ int EmojiTransmitter::getSizeOfSubGroupItems(std::string emojiSubGroup)
     }
     return 0;
 }
-std::string EmojiTransmitter::getEmojiByIndexFromSubGroup(std::string emojiSubGroup, int index)
+std::string EmojiTransmitter::getEmojiStringByIndexFromGroup(std::string emojiGroup, int index)
+{
+    if (emojiBuilder.m_isPopulated)
+    {
+        int count = 0;
+        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
+        {
+            if (epm.second.m_emojiGroup == emojiGroup)
+            {
+                if (count == index)
+                {
+                    return emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
+                }
+                count++;
+            }
+        }
+    }
+    return "";
+}
+std::string EmojiTransmitter::getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index)
 {
     if (emojiBuilder.m_isPopulated)
     {
@@ -378,30 +402,9 @@ std::string EmojiTransmitter::getEmojiByIndexFromSubGroup(std::string emojiSubGr
     }
     return "";
 }
-std::string EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
-{
-    if (emojiBuilder.m_isPopulated)
-    {
-        int count = 0;
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(1, getSizeOfSubGroupItems(emojiSubGroup) - 1);
-        int randomIndex = dis(gen);
 
-        for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
-        {
-            if (epm.second.m_emojiSubGroup == emojiSubGroup)
-            {
-                if (count == randomIndex)
-                {
-                    return emojiBuilder.getEmojiStringCharByCodePoint(epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size());
-                }
-                count++;
-            }
-        }
-    }
-    return "";
-}
+
+
 void EmojiTransmitter::printEmojiGroupWDescription(std::string emojiGroup)
 {
     if (emojiBuilder.m_isPopulated)
@@ -492,7 +495,6 @@ void EmojiTransmitter::printGroupsText()
         }
     }
 }
-
 void EmojiTransmitter::printSubGroupsText()
 {
     if (emojiBuilder.m_isPopulated)

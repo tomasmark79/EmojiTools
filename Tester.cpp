@@ -35,26 +35,31 @@ int main()
     std::cout << emojiWrapper.getRandomEmojiFromSubGroup("face-smiling") << std::endl;
 
     // get list of names of emoji groups and subgroups
+
     std::vector<std::string> emojiGroups = emojiWrapper.getEmojiGroups();
-        std::cout << "Emoji groups: " << emojiGroups.size() << std::endl;
+    std::cout << "Emoji groups: " << emojiGroups.size() << std::endl;
     std::vector<std::string> emojiSubGroups = emojiWrapper.getEmojiSubGroups();
-        std::cout << "Emoji sub-groups: " << emojiSubGroups.size() << std::endl;
+    std::cout << "Emoji sub-groups: " << emojiSubGroups.size() << std::endl;
 
     // get number of items in a emoji group or subgroup
+
     std::cout << "Number of items in group Smileys & Emotion = "
               << emojiWrapper.getSizeOfGroupItems("Smileys & Emotion")
               << std::endl;
-    
+
     std::cout << "Number of items in subgroup face-smiling = "
-                << emojiWrapper.getSizeOfSubGroupItems("face-smiling")
-                << std::endl;
+              << emojiWrapper.getSizeOfSubGroupItems("face-smiling")
+              << std::endl;
 
+    // get string emoji by index from group or subgroup
 
+    std::cout << "get emoji by index 5 from group Smileys & Emotion = "
+              << emojiWrapper.getEmojiStringByIndexFromGroup("Smileys & Emotion", 5)
+              << std::endl;
 
-
-
-
-
+    std::cout << "get emoji by index 5 from subgroup face-smiling = "
+              << emojiWrapper.getEmojiStringByIndexFromSubGroup("face-smiling", 5)
+              << std::endl;
 
 
 

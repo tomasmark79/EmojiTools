@@ -68,7 +68,8 @@ private:
 class EmojiTransmitter
 {
 public:
-    EmojiTransmitter() {};
+
+    EmojiTransmitter() = default;
     
     EmojiBuilder emojiBuilder;
 
@@ -93,6 +94,10 @@ public:
     int getSizeOfGroupItems(std::string emojiGroup);
     // get number of items in a subgroup
     int getSizeOfSubGroupItems(std::string emojiSubGroup);
+    // get emoji std::string character by index from group
+    std::string getEmojiStringByIndexFromGroup(std::string emojiGroup, int index);
+    // get emoji std::string character by index from subgroup
+    std::string getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index);
 
     // TODO
     
@@ -100,8 +105,6 @@ public:
     // Get emoji by description
     // Get emoji by unicode version
 
-    std::string getEmojiByIndexFromGroup(std::string emojiGroup, int index);
-    std::string getEmojiByIndexFromSubGroup(std::string emojiSubGroup, int index);
 
     void printEmojiGroupWDescription(std::string emojiGroup);
     void printEmojiGroup(std::string emojiGroup);

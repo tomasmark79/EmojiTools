@@ -1,9 +1,14 @@
-// wrapper class for EmojiParser namespace
-// wrapper is defined to be stable as possible
-
 #pragma once
 #include "EmojiTools.hpp"
 
+// MUST STAY STABLE for others
+//  _    _______  ___  ____________ ___________ 
+// | |  | | ___ \/ _ \ | ___ \ ___ \  ___| ___ \
+// | |  | | |_/ / /_\ \| |_/ / |_/ / |__ | |_/ /
+// | |/\| |    /|  _  ||  __/|  __/|  __||    / 
+// \  /\  / |\ \| | | || |   | |   | |___| |\ \ 
+//  \/  \/\_| \_\_| |_/\_|   \_|   \____/\_| \_|
+//
 class Emoji 
 {
 public:
@@ -72,7 +77,17 @@ public:
         return et.getSizeOfSubGroupItems(emojiSubGroup);
     }
 
+    // get emoji std::string character by index from group
+    std::string getEmojiStringByIndexFromGroup(const std::string emojiGroup, const int index)
+    {
+        return et.getEmojiStringByIndexFromGroup(emojiGroup, index);
+    }
 
+    // get emoji std::string character by index from subgroup
+    std::string getEmojiStringByIndexFromSubGroup(const std::string emojiSubGroup, const int index)
+    {
+        return et.getEmojiStringByIndexFromSubGroup(emojiSubGroup, index);
+    }
 
 
 
