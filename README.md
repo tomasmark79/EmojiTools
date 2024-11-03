@@ -1,3 +1,5 @@
+do not use - need to refactor to real library
+
 # Emoji Tools 😉🪄🎯
 
 ```cpp
