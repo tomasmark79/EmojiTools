@@ -2,7 +2,7 @@
 
 to
 
-https://github.com/tomasmark79/cmake-project-template.git
+[https://github.com/tomasmark79/cmake-project-template.git where branch "EmojiTools"](https://github.com/tomasmark79/cmake-project-template/tree/EmojiTools)
 
 # Emoji Tools 😉🪄🎯
 
