@@ -1,4 +1,8 @@
-do not use - need to refactor to real library
+# Latest Emoji Tools 😉🪄🎯 were migrated
+
+to
+
+https://github.com/tomasmark79/cmake-project-template.git
 
 # Emoji Tools 😉🪄🎯
 
