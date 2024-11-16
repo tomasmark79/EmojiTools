@@ -1,20 +1,31 @@
-#pragma once
+#ifndef __EMOJIWRAPPER_H__
+#define __EMOJIWRAPPER_H__
+
 #include "EmojiTools.hpp"
 
+#include <vector>
+
 // MUST STAY STABLE for others
-//  _    _______  ___  ____________ ___________
-// | |  | | ___ \/ _ \ | ___ \ ___ \  ___| ___ \
-// | |  | | |_/ / /_\ \| |_/ / |_/ / |__ | |_/ /
-// | |/\| |    /|  _  ||  __/|  __/|  __||    /
-// \  /\  / |\ \| | | || |   | |   | |___| |\ \ 
-//  \/  \/\_| \_\_| |_/\_|   \_|   \____/\_| \_|
-//
+/*
+  _    _______  ___  ____________ ___________
+ | |  | | ___ \/ _ \ | ___ \ ___ \  ___| ___ \
+ | |  | | |_/ / /_\ \| |_/ / |_/ / |__ | |_/ /
+ | |/\| |    /|  _  ||  __/|  __/|  __||    /
+ \  /\  / |\ \| | | || |   | |   | |___| |\ \
+  \/  \/\_| \_\_| |_/\_|   \_|   \____/\_| \_|
+
+*/
+
+#if __cplusplus < 202002L
+using char8_t = char; // C++17 and older
+#endif
+
 class Emoji
 {
-private:
+  private:
     EmojiTransmitter et;
 
-public:
+  public:
     Emoji() = default;
     ~Emoji() = default;
 
@@ -56,17 +67,11 @@ public:
 
     // get the vector containing names of emoji groups
     // vector.size() to retrieve the number of groups
-    std::vector<std::string> getEmojiGroups()
-    {
-        return et.getEmojiGroupsNames();
-    }
+    std::vector<std::string> getEmojiGroups() { return et.getEmojiGroupsNames(); }
 
     // get the vector containing names of emoji subgroups
     // vector.size() to retrieve the number of subgroups
-    std::vector<std::string> getEmojiSubGroups()
-    {
-        return et.getEmojiSubGroupsNames();
-    }
+    std::vector<std::string> getEmojiSubGroups() { return et.getEmojiSubGroupsNames(); }
 
     // get number of items in a group
     int getSizeOfGroupItems(const std::string emojiGroup)
@@ -104,3 +109,5 @@ public:
         return et.getEmojiSubGroupDescription(emojiSubGroup);
     }
 };
+
+#endif // __EMOJIWRAPPER_H__

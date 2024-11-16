@@ -1,14 +1,19 @@
-#include "Emoji.hpp" // wrapper class for EmojiParser namespace
-#include <iostream>
-#include <vector>
 
-int main()
+#include <emoji/EmojiWrapper.hpp>
+
+#include <emojitools/version.h>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+auto main(int argc, char **argv) -> int
 {
-    // HOW TO USE EmojiWrapper
 
     Emoji /*💋*/ emojiWrapper;
 
+    //
     // get emoji by codepoints
+    //
 
     // char32_t emojiCodePoint[1] = {0x1F600}; // 😀
     std::cout << "get 😀 = "
@@ -16,18 +21,17 @@ int main()
               << std::endl;
 
     std::cout << "get 😶‍🌫️ = "
-              << emojiWrapper.getEmojiStringCharByCodePoint((char32_t *)U"\U0001F636\U0000200D\U0001F32B\U0000FE0F", 4)
+              << emojiWrapper.getEmojiStringCharByCodePoint(
+                     (char32_t *)U"\U0001F636\U0000200D\U0001F32B\U0000FE0F", 4)
               << std::endl;
 
     // get all emojis from group or subgroup
 
     std::cout << "get all from Flags = "
-              << emojiWrapper.getAllEmojiesFromGroup("Flags").substr(0, 32)
-              << std::endl;
+              << emojiWrapper.getAllEmojiesFromGroup("Flags").substr(0, 32) << std::endl;
 
     std::cout << "get all from face-smiling = "
-              << emojiWrapper.getAllEmojiesFromSubGroup("country-flag").substr(0, 32)
-              << std::endl;
+              << emojiWrapper.getAllEmojiesFromSubGroup("country-flag").substr(0, 32) << std::endl;
 
     // get random emoji from group or subgroup
 
@@ -44,38 +48,26 @@ int main()
     // get number of items in a emoji group or subgroup
 
     std::cout << "Number of items in group Smileys & Emotion = "
-              << emojiWrapper.getSizeOfGroupItems("Smileys & Emotion")
-              << std::endl;
+              << emojiWrapper.getSizeOfGroupItems("Smileys & Emotion") << std::endl;
 
     std::cout << "Number of items in subgroup face-smiling = "
-              << emojiWrapper.getSizeOfSubGroupItems("face-smiling")
-              << std::endl;
+              << emojiWrapper.getSizeOfSubGroupItems("face-smiling") << std::endl;
 
     // get string emoji by index from group or subgroup
 
     std::cout << "get emoji by index 5 from group Smileys & Emotion = "
-              << emojiWrapper.getEmojiStringByIndexFromGroup("Smileys & Emotion", 5)
-              << std::endl;
+              << emojiWrapper.getEmojiStringByIndexFromGroup("Smileys & Emotion", 5) << std::endl;
 
     std::cout << "get emoji by index 5 from subgroup face-smiling = "
-              << emojiWrapper.getEmojiStringByIndexFromSubGroup("face-smiling", 5)
-              << std::endl;
+              << emojiWrapper.getEmojiStringByIndexFromSubGroup("face-smiling", 5) << std::endl;
 
     // get emoji group and subgroup description
 
-    std::cout << "get group description Smileys & Emotion = "
-              << std::endl
-              << emojiWrapper.getEmojiGroupDescription("Smileys & Emotion")
-              << std::endl;
+    std::cout << "get group description Smileys & Emotion = " << std::endl
+              << emojiWrapper.getEmojiGroupDescription("Smileys & Emotion") << std::endl;
 
-    std::cout << "get subgroup description face-smiling = "
-              << std::endl
-              << emojiWrapper.getEmojiSubGroupDescription("face-smiling")
-              << std::endl;
+    std::cout << "get subgroup description face-smiling = " << std::endl
+              << emojiWrapper.getEmojiSubGroupDescription("face-smiling") << std::endl;
 
     return 0;
 }
-
-// MIT License
-//
-// Copyright (c) 2024 Tomas Mark

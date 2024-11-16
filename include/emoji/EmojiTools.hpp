@@ -1,4 +1,3 @@
-// include/EmojiTools.hpp
 #ifndef __EMOJITOOLS_H__
 #define __EMOJITOOLS_H__
 

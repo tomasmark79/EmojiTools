@@ -1,3 +1,6 @@
+#include "emoji/EmojiTools.hpp"
+#include "emoji/emoji-definition.hpp" // Unicode defition of emojis converted to source code
+
 #include <stdio.h>
 #include <iostream>
 #include <filesystem>
@@ -5,9 +8,6 @@
 #include <algorithm>
 #include <regex>
 #include <random>
-
-#include "assets/emoji-test.hpp" // Unicode defition of emojis converted to source code
-#include "EmojiTools.hpp"
 
 char8_t *Utf8Parser::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
 {
