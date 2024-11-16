@@ -19,7 +19,7 @@ CPMAddPackage(
 
 ```cmake
 # Link dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt EmojiTools::EmojiTools)
+target_link_libraries(${PROJECT_NAME} PRIVATE EmojiTools::EmojiTools)
 ```
 
 #### add C++ header
