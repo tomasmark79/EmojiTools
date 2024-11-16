@@ -1,7 +1,7 @@
 # Emoji Tools 😉🪄🎯
 
 #### How to implement
-This project is compatible with Setup-free [CMake dependency management](https://github.com/cpm-cmake/CPM.cmake)).
+This project is compatible with Setup-free [CMake dependency management](https://github.com/cpm-cmake/CPM.cmake).
 
 #### add CPM.cmake snippet
 
@@ -24,11 +24,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt EmojiTools::EmojiTools)
 
 #### add C++ header
 
-``` cpp
+```cpp
 #include <emoji/EmojiWrapper.hpp>
 ```
 
-#### use library in C++
+#### create instance and call methods via wrapper
 
 ```cpp
 Emoji emoji;
