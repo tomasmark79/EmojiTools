@@ -73,6 +73,8 @@ public:
     std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
     // get emoji char8_t character by codepoint or codepoints
     char8_t getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length);
+    // get random emoji
+    std::string &getRandomEmoji(std::string &randomEmoji);
     // get random emoji contained in a group
     std::string getRandomEmojiFromGroup(std::string emojiGroup);
     // get random emoji contained in a subgroup

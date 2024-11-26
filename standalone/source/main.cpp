@@ -25,6 +25,9 @@ auto main(int argc, char **argv) -> int
                      (char32_t *)U"\U0001F636\U0000200D\U0001F32B\U0000FE0F", 4)
               << std::endl;
 
+    std::string randomEmoji;
+    std::cout << "get random emoji = " << emojiWrapper.getRandomEmoji(randomEmoji) << std::endl;
+
     // get all emojis from group or subgroup
 
     std::cout << "get all from Flags = "

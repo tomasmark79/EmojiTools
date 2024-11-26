@@ -41,6 +41,12 @@ class Emoji
         return et.getEmojiChar8_tCharByCodePoint(emojiCodePoints, length);
     }
 
+    // get random emoji
+    std::string& getRandomEmoji(std::string &randomEmoji)
+    {
+        return et.getRandomEmoji(randomEmoji);
+    }
+
     // get random emoji contained in a group
     std::string getRandomEmojiFromGroup(const std::string emojiGroup)
     {
