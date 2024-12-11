@@ -1,3 +1,5 @@
+TODO: Transformation to MarkWare VCMake Structure
+
 # Emoji Tools 😉🪄🎯
 
 #### How to implement
