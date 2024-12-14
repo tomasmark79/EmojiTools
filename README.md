@@ -4,13 +4,16 @@ This repository provides a simple library that facilitates working with emoji ch
 
 This project is a library CMake compatible
 ```cmake
-# git@github.com:tomasmark79/EmojiTools.git
+# EmojiTools
 CPMAddPackage(
-  NAME EmojiTools
-  GIT_TAG main
-  GITHUB_REPOSITORY tomasmark79/EmojiTools
-  OPTIONS "EMOJI_INSTALL NO" # create an installable target
+    NAME EmojiToolsLib
+    GIT_TAG main
+    GITHUB_REPOSITORY tomasmark79/EmojiTools
+    OPTIONS "EMOJI_INSTALL NO" # create an installable target
 )
+if(EmojiToolsLib_ADDED)
+    target_link_libraries(${PROJECT_LIBRARY_NAME} PRIVATE name.digitalspace.www::EmojiToolsLib)
+endif()
 ```
 
 #### Implementation
