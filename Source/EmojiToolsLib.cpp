@@ -1,4 +1,5 @@
 #include "EmojiToolsLib/EmojiToolsLib.hpp"
+
 #include "EmojiWrapper.hpp"
 
 #include <iostream>
