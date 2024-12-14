@@ -1,11 +1,11 @@
-#ifndef __EMOJITOOLS_H__
-#define __EMOJITOOLS_H__
+#ifndef __EMOJIBUILDER_H__
+#define __EMOJIBUILDER_H__
 
-#include <string>
-#include <fstream>
-#include <vector>
-#include <map>
 #include <assert.h>
+#include <fstream>
+#include <map>
+#include <string>
+#include <vector>
 
 #if __cplusplus < 202002L
 using char8_t = char; // C++17 and older
@@ -14,13 +14,6 @@ using char8_t = char; // C++17 and older
 #ifndef size_t
 using size_t = decltype(sizeof(0));
 #endif
-
-class Utf8Parser
-{
-public:
-    char8_t *encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8);
-    char8_t *encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length, char8_t *buffer8);
-};
 
 class EmojiBuilder
 {
@@ -33,12 +26,14 @@ class EmojiBuilder
         std::string m_emojiTextDescription;
     };
 
-public:
+  public:
     std::map<int, EmojiPropertiesStructure> m_emojiPropertiesMap;
-    Utf8Parser utf8parser;
 
     EmojiBuilder();
-    ~EmojiBuilder() {};
+    ~EmojiBuilder(){};
+
+    char8_t *encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8);
+    char8_t *encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length, char8_t *buffer8);
 
     // get emoji character by codepoint or codepoints
     std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
@@ -46,11 +41,12 @@ public:
 
     bool m_isPopulated{false};
 
-private:
+  private:
     /// @brief Construct a new EmojiTools object
     /// @param epm std::map
     /// @param file std::ifstream
-    void constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStructure> &epm, std::istream &file);
+    void constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStructure> &epm,
+                                     std::istream &file);
 
     /// @brief load emoji asset file from hardcoded header file
     /// @return std::sstringstream if successful
@@ -63,12 +59,12 @@ private:
 
 class EmojiTransmitter
 {
-public:
+  public:
     EmojiTransmitter() = default;
 
     EmojiBuilder emojiBuilder;
 
-public:
+  public:
     // get emoji character by codepoint or codepoints
     std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
     // get emoji char8_t character by codepoint or codepoints
@@ -115,8 +111,4 @@ public:
     void printEmojiDescription(std::string emojiDescription);
 };
 
-#endif // __EMOJITOOLS_H__
-
-// MIT License
-//
-// Copyright (c) 2024 Tomas Mark
+#endif // __EMOJIBUILDER_H__

@@ -1,0 +1,164 @@
+{
+    /* (c) Tomáš Mark 2024 */
+    "version": "2.0.0",
+    "tasks": [
+        {
+            /* CMAKE TASKS */
+            "label": "CMake Tasks",
+            "type": "shell",
+            "command": "${workspaceFolder}/CMakeController.sh",
+            "args": [
+                "${input:taskName}",
+                "${input:archBuildType}",
+                "${input:buildType}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "CMake Tasks",
+            "problemMatcher": []
+        },
+        {
+            /* LINT */
+            "label": "lint",
+            "type": "shell",
+            "command": "find",
+            "args": [
+                "${workspaceFolder}",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/Build/*\"",
+                "\\(",
+                "-name",
+                "\"*.c\"",
+                "-o",
+                "-name",
+                "\"*.cpp\"",
+                "-o",
+                "-name",
+                "\"*.h\"",
+                "-o",
+                "-name",
+                "\"*.hpp\"",
+                "\\)",
+                "-exec",
+                "clang-tidy",
+                "{}",
+                "+"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task for linting C++ files with clang-tidy.",
+        },
+        {
+            /* CLANG FORMAT */
+            "label": "clang-format",
+            "type": "shell",
+            "command": "find",
+            "args": [
+                "${workspaceFolder}",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/Build/*\"",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/CMakeFiles/*\"",
+                "\\(",
+                "-name",
+                "\"*.c\"",
+                "-o",
+                "-name",
+                "\"*.cpp\"",
+                "-o",
+                "-name",
+                "\"*.h\"",
+                "-o",
+                "-name",
+                "\"*.hpp\"",
+                "\\)",
+                "-exec",
+                "clang-format",
+                "-i",
+                "{}",
+                "+"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Generated task for formatting C++ files with clang-format.",
+        },
+        {
+            /* CMAKE FORMAT */
+            "label": "cmake-format",
+            "type": "shell",
+            "command": "find",
+            "args": [
+                "${workspaceFolder}",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/Build/*\"",
+                "\\(",
+                "-name",
+                "\"CMakeLists.txt\"",
+                "-o",
+                "-name",
+                "\"*.cmake\"",
+                "\\)",
+                "-exec",
+                "cmake-format",
+                "-i",
+                "{}",
+                "+"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Generated task for formatting CMake files with cmake-format.",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "taskName",
+            "type": "pickString",
+            "description": "Select CMake task",
+            "options": [
+                "CMake: configure (Standalone)",
+                "CMake: build (Standalone)",
+                "CMake: clean (Standalone)",
+                "CMake: install (Standalone)",
+                "CMake: test (Standalone)",
+                "CMake: collect licenses (Standalone)",
+                "CMake: configure (Library)",
+                "CMake: build (Library)",
+                "CMake: clean (Library)",
+                "CMake: install (Library)",
+                "CMake: test (Library)",
+                "CMake: collect licenses (Library)",
+            ],
+            "default": "CMake: build (Standalone)"
+        },
+        {
+            "id": "archBuildType",
+            "type": "pickString",
+            "description": "Select architecture",
+            "options": [
+                "Native",
+                "Aarch64"
+            ],
+            "default": "Native"
+        },
+        {
+            "id": "buildType",
+            "type": "pickString",
+            "description": "Select build type",
+            "options": [
+                "Debug",
+                "Release",
+                "RelWithDebInfo",
+                "MinSizeRel"
+            ],
+            "default": "Debug"
+        }
+    ]
+}

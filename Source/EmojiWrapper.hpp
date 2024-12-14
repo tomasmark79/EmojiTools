@@ -1,7 +1,7 @@
 #ifndef __EMOJIWRAPPER_H__
 #define __EMOJIWRAPPER_H__
 
-#include "EmojiTools.hpp"
+#include "EmojiBuilder.hpp"
 
 #include <vector>
 

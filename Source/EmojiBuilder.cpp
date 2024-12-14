@@ -1,6 +1,6 @@
-#include "emoji/EmojiTools.hpp"
+#include "EmojiBuilder.hpp"
 
-#include "emoji/emoji-definition.hpp" // Unicode defition of emojis converted to source code
+#include "UnicodeEmojiTestTxt.hpp"
 
 #include <algorithm>
 #include <filesystem>
@@ -13,7 +13,7 @@
 std::random_device rd;
 std::mt19937 gen(rd());
 
-char8_t *Utf8Parser::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
+char8_t *EmojiBuilder::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
 {
     constexpr auto byte = [](char32_t x)
     {
@@ -47,8 +47,8 @@ char8_t *Utf8Parser::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
 
     return buffer8;
 }
-char8_t *Utf8Parser::encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length,
-                                        char8_t *buffer8)
+char8_t *EmojiBuilder::encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length,
+                                          char8_t *buffer8)
 {
     for (size_t i = 0; i < length; ++i)
     {
@@ -155,8 +155,8 @@ void EmojiBuilder::constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStru
             // combine emoji character from code points
             char8_t buffer[32];
             // Utf8Tools::Utf8Parser utf8tools;
-            char8_t *end = utf8parser.encodeUtf8Sequence(emojiCodePoints.data(),
-                                                         emojiCodePoints.size(), buffer);
+            char8_t *end
+                = encodeUtf8Sequence(emojiCodePoints.data(), emojiCodePoints.size(), buffer);
             *end = '\0'; // Null-terminating the string
             // pr("\t"); pr("Emoji: "); pr(reinterpret_cast<char *>(buffer)); br();
         }
@@ -178,7 +178,7 @@ void EmojiBuilder::constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStru
 }
 std::istringstream EmojiBuilder::loadEmojiAssetsFromHardcodedHeader()
 {
-    std::istringstream ss(emojiTestFileContent);
+    std::istringstream ss(UnicodeEmojiTestTxtContent);
     if (ss.str().empty())
     {
 
@@ -201,7 +201,7 @@ std::string EmojiBuilder::getEmojiStringCharByCodePoint(char32_t *emojiCodePoint
     if (m_isPopulated)
     {
         char8_t buffer[32];
-        char8_t *end = utf8parser.encodeUtf8Sequence(emojiCodePoints, length, buffer);
+        char8_t *end = encodeUtf8Sequence(emojiCodePoints, length, buffer);
         *end = '\0'; // Null-terminating the string
         return std::string(reinterpret_cast<char *>(buffer));
     }
@@ -211,7 +211,7 @@ std::string EmojiBuilder::getEmojiStringCharByCodePoint(char32_t *emojiCodePoint
 char8_t EmojiBuilder::getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     char8_t buffer[32];
-    char8_t *end = utf8parser.encodeUtf8Sequence(emojiCodePoints, length, buffer);
+    char8_t *end = encodeUtf8Sequence(emojiCodePoints, length, buffer);
     *end = '\0'; // Null-terminating the string
     // std::cout << reinterpret_cast<char *>(buffer);
     // TODO
