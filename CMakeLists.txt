@@ -65,18 +65,19 @@ CPMAddPackage(
 cpm_licenses_create_disclaimer_target(
     write-licenses "${CMAKE_CURRENT_BINARY_DIR}/third_party.txt" "${CPM_PACKAGES}"
 )
+# set_property(TARGET write-licenses PROPERTY EXCLUDE_FROM_ALL TRUE)
 
-# EmojiTools
-CPMAddPackage(
-    NAME EmojiTools
-    GIT_TAG main
-    GITHUB_REPOSITORY tomasmark79/EmojiTools
-    OPTIONS "EMOJI_INSTALL NO" # create an installable target
-)
-if(EmojiTools_ADDED)
-    # target_include_directories(MarkWareVCMakeLibrary PRIVATE ${EmojiTools_SOURCE_DIR}/include)
-    target_link_libraries(${PROJECT_LIBRARY_NAME} PRIVATE EmojiTools::EmojiTools)
-endif()
+# # EmojiTools
+# CPMAddPackage(
+#     NAME EmojiTools
+#     GIT_TAG main
+#     GITHUB_REPOSITORY tomasmark79/EmojiTools
+#     OPTIONS "EMOJI_INSTALL NO" # create an installable target
+# )
+# if(EmojiTools_ADDED)
+#     # target_include_directories(MarkWareVCMakeLibrary PRIVATE ${EmojiTools_SOURCE_DIR}/include)
+#     target_link_libraries(${PROJECT_LIBRARY_NAME} PRIVATE EmojiTools::EmojiTools)
+# endif()
 
 # headers
 target_include_directories(
@@ -106,13 +107,13 @@ packageProject(
 )
 
 # ---- Install ----
-include(GNUInstallDirs)
-install(
-    TARGETS EmojiTools
-    EXPORT ${PROJECT_LIBRARY_NAME}Targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    INCLUDES
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_LIBRARY_NAME}-${PROJECT_VERSION}
-)
+# include(GNUInstallDirs)
+# install(
+#     TARGETS 
+#     EXPORT ${PROJECT_LIBRARY_NAME}Targets
+#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#     INCLUDES
+#     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_LIBRARY_NAME}-${PROJECT_VERSION}
+# )
