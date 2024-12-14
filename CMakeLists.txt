@@ -66,7 +66,6 @@ CPMAddPackage(
 cpm_licenses_create_disclaimer_target(
     write-licenses-emoji-tools "${CMAKE_CURRENT_BINARY_DIR}/third_party.txt" "${CPM_PACKAGES}"
 )
-set_property(TARGET write-licenses-emoji-tools PROPERTY EXCLUDE_FROM_ALL TRUE)
 
 # headers
 target_include_directories(
