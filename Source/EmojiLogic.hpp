@@ -1,5 +1,5 @@
-#ifndef __EMOJIBUILDER_H__
-#define __EMOJIBUILDER_H__
+#ifndef __EMOJILOGIC_H__
+#define __EMOJILOGIC_H__
 
 #include <assert.h>
 #include <fstream>
@@ -111,4 +111,4 @@ class EmojiTransmitter
     void printEmojiDescription(std::string emojiDescription);
 };
 
-#endif // __EMOJIBUILDER_H__
+#endif // __EMOJILOGIC_H__

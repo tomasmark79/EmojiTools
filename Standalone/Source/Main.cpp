@@ -7,8 +7,11 @@
 
 auto main(int argc, char **argv) -> int
 {
-    EmojiToolsLib Lib;
-    std::cout << "Version: " << EMOJITOOLSLIB_VERSION << std::endl;
+    EmojiToolsLib /*💋*/ emojiTools;
+    std::string emoji;
+
+    std::cout << "Version: " << EMOJITOOLSLIB_VERSION << " " << emojiTools.getRandomEmoji(emoji)
+              << std::endl;
 
     return 0;
 }

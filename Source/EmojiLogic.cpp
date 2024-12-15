@@ -1,4 +1,4 @@
-#include "EmojiBuilder.hpp"
+#include "EmojiLogic.hpp"
 
 #include "UnicodeEmojiTestTxt.hpp"
 
@@ -192,8 +192,11 @@ std::ifstream EmojiBuilder::loadEmojiAssetsFromFile()
     // "/assets/emoji-test.txt";
     std::string assetFilePath = "/home/tomas/dev/cpp/modules/EmojiTools/assets/emoji-test.txt-";
     std::ifstream is(assetFilePath);
-    if (!is)
-        std::cerr << "Emoji asset test file not found. Loading hardcoded definition." << std::endl;
+
+    // if (!is)
+    //     std::cerr << "Emoji asset test file not found. Loading hardcoded definition." <<
+    //     std::endl;
+
     return is;
 }
 std::string EmojiBuilder::getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
