@@ -20,10 +20,10 @@ class EmojiBuilder
     struct EmojiPropertiesStructure
     {
         std::vector<char32_t> m_emojiCodePoints;
-        std::string m_emojiGroup;
-        std::string m_emojiSubGroup;
-        std::string m_emojiUnicodeVersion;
-        std::string m_emojiTextDescription;
+        std::string           m_emojiGroup;
+        std::string           m_emojiSubGroup;
+        std::string           m_emojiUnicodeVersion;
+        std::string           m_emojiTextDescription;
     };
 
   public:
@@ -33,11 +33,15 @@ class EmojiBuilder
     ~EmojiBuilder(){};
 
     char8_t *encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8);
-    char8_t *encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length, char8_t *buffer8);
+    char8_t *encodeUtf8Sequence(
+        const char32_t *emojiCodePoints, size_t length, char8_t *buffer8
+    );
 
     // get emoji character by codepoint or codepoints
-    std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
-    char8_t getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length);
+    std::string
+    getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
+    char8_t
+    getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length);
 
     bool m_isPopulated{false};
 
@@ -45,8 +49,9 @@ class EmojiBuilder
     /// @brief Construct a new EmojiTools object
     /// @param epm std::map
     /// @param file std::ifstream
-    void constructEmojiPropertiesMap(std::map<int, EmojiPropertiesStructure> &epm,
-                                     std::istream &file);
+    void constructEmojiPropertiesMap(
+        std::map<int, EmojiPropertiesStructure> &epm, std::istream &file
+    );
 
     /// @brief load emoji asset file from hardcoded header file
     /// @return std::sstringstream if successful
@@ -66,9 +71,11 @@ class EmojiTransmitter
 
   public:
     // get emoji character by codepoint or codepoints
-    std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
+    std::string
+    getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length);
     // get emoji char8_t character by codepoint or codepoints
-    char8_t getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length);
+    char8_t
+    getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length);
     // get random emoji
     std::string &getRandomEmoji(std::string &randomEmoji);
     // get random emoji contained in a group
@@ -88,9 +95,11 @@ class EmojiTransmitter
     // get number of items in a subgroup
     int getSizeOfSubGroupItems(std::string emojiSubGroup);
     // get emoji std::string character by index from group
-    std::string getEmojiStringByIndexFromGroup(std::string emojiGroup, int index);
+    std::string
+    getEmojiStringByIndexFromGroup(std::string emojiGroup, int index);
     // get emoji std::string character by index from subgroup
-    std::string getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index);
+    std::string
+    getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index);
     // get emoji group description
     std::string getEmojiGroupDescription(std::string emojiGroup);
     // get emoji subgroup description
