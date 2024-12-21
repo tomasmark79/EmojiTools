@@ -28,25 +28,15 @@ CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.12.0")
 CPMAddPackage("gh:fmtlib/fmt#11.0.2")
 CPMAddPackage("gh:cpm-cmake/CPMLicenses.cmake@0.0.7")
 
-# if(CPMLicenses.cmake_ADDED)
-#     cpm_licenses_create_disclaimer_target(
-#         write-licenses-${PROJECT_LIBRARY_NAME} "${CMAKE_CURRENT_BINARY_DIR}/third_party.txt"
-#         "${CPM_PACKAGES}"
-#     )
-# endif()
-
-# CPMAddPackage(NAME EmojiToolsLib GITHUB_REPOSITORY tomasmark79/EmojiTools GIT_TAG main OPTIONS "EMOJI_INSTALL NO")
+if(CPMLicenses.cmake_ADDED)
+    cpm_licenses_create_disclaimer_target(
+        write-licenses-${PROJECT_LIBRARY_NAME} "${CMAKE_CURRENT_BINARY_DIR}/third_party.txt"
+        "${CPM_PACKAGES}"
+    )
+endif()
 
 # ---- CMake Modules ----
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules")
-
-#find_package(Threads REQUIRED)
-#find_package(X11 REQUIRED)
-
-# ---- Conan ----
-# find_package(dpp CONFIG REQUIRED) # CONFIG means find_package require dpp-config.cmake file
-#find_package(BZip2 REQUIRED)
-#find_package(CURL REQUIRED)
 
 # Glob not recommended, but the simplest way for this template
 file(GLOB_RECURSE headers CONFIGURE_DEPENDS
@@ -89,10 +79,10 @@ target_compile_options(
 )
 
 # ---- Link libraries ----
-target_link_libraries(${PROJECT_LIBRARY_NAME}
-    PUBLIC
-    EmojiToolsLib
-)
+# target_link_libraries(${PROJECT_LIBRARY_NAME}
+#     PUBLIC
+#     No explicit dependencies for EmojiTools
+# )
 
 # ---- Versioning ----
 string(TOLOWER "${PROJECT_LIBRARY_NAME}/version.h" VERSION_HEADER_LOCATION)
