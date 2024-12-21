@@ -1,17 +1,24 @@
-#include <EmojiToolsLib/EmojiToolsLib.hpp>
-#include <emojitoolslib/version.h>
+#include <EmojiTools/EmojiTools.hpp>
+#include <emojitools/version.h>
+
+#include <chrono>
 #include <iostream>
+#include <memory>
+#include <thread>
 
-// Standalone applications are the ones that are not part of a library
-// (c) Tomáš Mark 2024
+// Standalone main entry point
 
-auto main(int argc, char **argv) -> int
+auto main(int argc, char *argv[], char *env[]) -> int
 {
-    EmojiToolsLib /*💋*/ emojiTools;
-    std::string emoji;
+    // init EmojiTools instance
+    std::unique_ptr<EmojiTools> Lib = std::make_unique<EmojiTools>();
 
-    std::cout << "Version: " << EMOJITOOLSLIB_VERSION << " " << emojiTools.getRandomEmoji(emoji)
-              << std::endl;
+    // five seconds delay
+    std::cout << "Wait for 5 seconds please ..." << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+
+    // bye bye
+    std::cout << "Bye bye!" << std::endl;
 
     return 0;
 }

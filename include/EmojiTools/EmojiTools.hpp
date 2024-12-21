@@ -1,5 +1,7 @@
-#ifndef __EMOJITOOLSLIB_H__
-#define __EMOJITOOLSLIB_H__
+#ifndef __EMOJITOOLS_H__
+#define __EMOJITOOLS_H__
+
+// Library declaration
 
 #include "../Source/EmojiLogic.hpp"
 
@@ -7,12 +9,11 @@
 // Those are the declarations of the class EmojiToolsLib
 // (c) Tomáš Mark 2024
 
-// Facade interface design pattern for the EmojiToolsLib
-class EmojiToolsLib
+class EmojiTools
 {
   public:
-    EmojiToolsLib();
-    ~EmojiToolsLib();
+    EmojiTools();
+    ~EmojiTools();
 
     // hide the implementation details
   private:
@@ -21,19 +22,24 @@ class EmojiToolsLib
     // public interface
   public:
     // get emoji std::string character by codepoint or codepoints
-    std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
+    std::string
+    getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
     {
         return et.getEmojiStringCharByCodePoint(emojiCodePoints, length);
     }
 
     // get emoji char8_t character by codepoint or codepoints
-    char8_t getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
+    char8_t
+    getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
     {
         return et.getEmojiChar8_tCharByCodePoint(emojiCodePoints, length);
     }
 
     // get random emoji
-    std::string &getRandomEmoji(std::string &randomEmoji) { return et.getRandomEmoji(randomEmoji); }
+    std::string &getRandomEmoji(std::string &randomEmoji)
+    {
+        return et.getRandomEmoji(randomEmoji);
+    }
 
     // get random emoji contained in a group
     std::string getRandomEmojiFromGroup(const std::string emojiGroup)
@@ -61,11 +67,17 @@ class EmojiToolsLib
 
     // get the vector containing names of emoji groups
     // vector.size() to retrieve the number of groups
-    std::vector<std::string> getEmojiGroups() { return et.getEmojiGroupsNames(); }
+    std::vector<std::string> getEmojiGroups()
+    {
+        return et.getEmojiGroupsNames();
+    }
 
     // get the vector containing names of emoji subgroups
     // vector.size() to retrieve the number of subgroups
-    std::vector<std::string> getEmojiSubGroups() { return et.getEmojiSubGroupsNames(); }
+    std::vector<std::string> getEmojiSubGroups()
+    {
+        return et.getEmojiSubGroupsNames();
+    }
 
     // get number of items in a group
     int getSizeOfGroupItems(const std::string emojiGroup)
@@ -80,13 +92,17 @@ class EmojiToolsLib
     }
 
     // get emoji std::string character by index from group
-    std::string getEmojiStringByIndexFromGroup(const std::string emojiGroup, const int index)
+    std::string getEmojiStringByIndexFromGroup(
+        const std::string emojiGroup, const int index
+    )
     {
         return et.getEmojiStringByIndexFromGroup(emojiGroup, index);
     }
 
     // get emoji std::string character by index from subgroup
-    std::string getEmojiStringByIndexFromSubGroup(const std::string emojiSubGroup, const int index)
+    std::string getEmojiStringByIndexFromSubGroup(
+        const std::string emojiSubGroup, const int index
+    )
     {
         return et.getEmojiStringByIndexFromSubGroup(emojiSubGroup, index);
     }
@@ -104,4 +120,4 @@ class EmojiToolsLib
     }
 };
 
-#endif // __EMOJITOOLSLIB_H__
+#endif // __EMOJITOOLS_H__

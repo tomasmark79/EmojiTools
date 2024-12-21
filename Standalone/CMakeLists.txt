@@ -1,30 +1,53 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 # (c) Tomáš Mark 2024
 
-# ---- Project attributes ----
-set(PROJECT_STANDALONE_NAMESPACE name.digitalspace.www)
-set(PROJECT_STANDALONE_NAME EmojiToolsStandalone) # for change use ./ProjectRenamer.sh
+# ---- Project Standalone namespace::name  ----
+set(PROJECT_STANDALONE_NAMESPACE dsdotname)
+set(PROJECT_STANDALONE_NAME EmojiToolsStandalone) # for change use ./TemplateRenamer.sh
 
-project(${PROJECT_STANDALONE_NAME} LANGUAGES C CXX)
+# ---- Generate Static/Shared targets (used by Conan as well) ----
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
-# --- Import tools ----
-include(../cmake/tools.cmake)
+# ---- Project ----
+project(${PROJECT_STANDALONE_NAME} LANGUAGES C CXX ASM)
 
-# ---- Dependencies ----
-include(../cmake/CPM.cmake)
+# ---- Include guards ----
+if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+    message(
+        FATAL_ERROR
+        "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
+    )
+endif()
 
-CPMAddPackage(NAME EmojiToolsLib SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+# Glob not recommended, but the simplest way for this template
+file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.c
+)
 
 # ---- Create standalone executable ----
-file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp
-     ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.c
-)
-
 add_executable(${PROJECT_STANDALONE_NAME} ${sources})
 
+# ---- Standalone options ----
 set_target_properties(
-    ${PROJECT_STANDALONE_NAME} PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "${PROJECT_STANDALONE_NAME}"
+    ${PROJECT_STANDALONE_NAME}
+    PROPERTIES OUTPUT_NAME "${PROJECT_STANDALONE_NAME}"
 )
 
-target_link_libraries(${PROJECT_STANDALONE_NAME} name.digitalspace.www::EmojiToolsLib)
+# ---- CPM -----
+include(../cmake/CPM.cmake)
+#include(../cmake/Dependencies.cmake)
+include(../cmake/tools.cmake)
+
+# ---- CMake Modules ----
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}../cmake/Modules")
+
+CPMAddPackage(NAME EmojiTools SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+
+target_link_libraries(
+    ${PROJECT_STANDALONE_NAME}
+    PRIVATE
+    dsdotname::EmojiTools 
+)
+
+# ---- Install ----

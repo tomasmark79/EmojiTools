@@ -86,6 +86,8 @@
         "variant": "cpp",
         "text_encoding": "cpp",
         "expected": "cpp",
-        "*.ipp": "cpp"
+        "err.h": "c",
+        "e_os.h": "c",
+        "*.in": "cpp"
     }
 }
