@@ -84,7 +84,7 @@ target_include_directories(
 target_compile_options(
     ${PROJECT_LIBRARY_NAME}
     PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/W4;/permissive->>"
-           "$<$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>:-Wall;-Wextra;-Wpedantic>")
+           "$<$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>:-Wall;-Wextra;-Wpedantic>"
 )
 
 # ---- Link libraries ----
