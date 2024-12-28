@@ -70,9 +70,6 @@ add_library(${PROJECT_LIBRARY_NAME} ${headers} ${sources})
 # ---- Library features ----
 target_compile_features(${PROJECT_LIBRARY_NAME} PUBLIC cxx_std_17)
 
-# ---- Library options
-target_compile_options(${PROJECT_LIBRARY_NAME} PUBLIC "-Wall" "-Wextra" "-Wpedantic")
-
 # header-only libraries change all PUBLIC flags to INTERFACE and create an interface target:
 # <add_library(${PROJECT_LIBRARY_NAME} INTERFACE)>
 target_include_directories(
@@ -85,9 +82,9 @@ target_include_directories(
 
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(
-    ${PROJECT_LIBRARY_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->" # Strict
-
-    # conformance
+    ${PROJECT_LIBRARY_NAME}
+    PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/W4;/permissive->>"
+           "$<$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>:-Wall;-Wextra;-Wpedantic>")
 )
 
 # ---- Link libraries ----
