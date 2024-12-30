@@ -83,8 +83,8 @@ target_include_directories(
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(
     ${LIBRARY_NAME}
-    PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive-;/W4>"
-           "$<$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>:-Wall;-Wextra;-Wpedantic;-MMD;-MP>")
+    PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/W4;/permissive->"
+    "$<$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>:-Wall;-Wextra;-Wpedantic;-MMD;-MP>")
 
 # ---- Link libraries ----
 # target_link_libraries(${PROJECT_LIBRARY_NAME} PUBLIC NoLinkLibraries )
