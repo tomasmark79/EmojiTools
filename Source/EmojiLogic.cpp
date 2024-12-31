@@ -15,7 +15,7 @@ std::mt19937       gen(rd());
 
 char8_t *EmojiBuilder::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
 {
-    constexpr auto byte = [](char32_t x)
+    auto byte = [](char32_t x)
     {
         assert(x <= 0x100); // 256
         return static_cast<char8_t>(x);
