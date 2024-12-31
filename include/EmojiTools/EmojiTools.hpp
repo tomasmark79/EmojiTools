@@ -1,13 +1,7 @@
 #ifndef __EMOJITOOLS_H__
 #define __EMOJITOOLS_H__
 
-// Library declaration
-
 #include "../Source/EmojiLogic.hpp"
-
-// This header file is supposed to be used by standalone applications
-// Those are the declarations of the class EmojiToolsLib
-// (c) Tomáš Mark 2024
 
 class EmojiTools
 {
@@ -22,15 +16,13 @@ class EmojiTools
     // public interface
   public:
     // get emoji std::string character by codepoint or codepoints
-    std::string
-    getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
+    std::string getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
     {
         return et.getEmojiStringCharByCodePoint(emojiCodePoints, length);
     }
 
     // get emoji char8_t character by codepoint or codepoints
-    char8_t
-    getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
+    char8_t getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
     {
         return et.getEmojiChar8_tCharByCodePoint(emojiCodePoints, length);
     }
@@ -92,17 +84,13 @@ class EmojiTools
     }
 
     // get emoji std::string character by index from group
-    std::string getEmojiStringByIndexFromGroup(
-        const std::string emojiGroup, const int index
-    )
+    std::string getEmojiStringByIndexFromGroup(const std::string emojiGroup, const int index)
     {
         return et.getEmojiStringByIndexFromGroup(emojiGroup, index);
     }
 
     // get emoji std::string character by index from subgroup
-    std::string getEmojiStringByIndexFromSubGroup(
-        const std::string emojiSubGroup, const int index
-    )
+    std::string getEmojiStringByIndexFromSubGroup(const std::string emojiSubGroup, const int index)
     {
         return et.getEmojiStringByIndexFromSubGroup(emojiSubGroup, index);
     }

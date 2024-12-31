@@ -25,8 +25,7 @@ char8_t *EmojiBuilder::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
     if (emojiCodePoint >= 65536)
     {
         *buffer8++ = byte(0b1111'0000 | (emojiCodePoint >> 18));
-        *buffer8++ =
-            byte(continuation | ((emojiCodePoint >> 12) & 0b0011'1111));
+        *buffer8++ = byte(continuation | ((emojiCodePoint >> 12) & 0b0011'1111));
         *buffer8++ = byte(continuation | ((emojiCodePoint >> 6) & 0b0011'1111));
         *buffer8++ = byte(continuation | (emojiCodePoint & 0b0011'1111));
     }
@@ -48,9 +47,8 @@ char8_t *EmojiBuilder::encodeUtf8(char32_t emojiCodePoint, char8_t *buffer8)
 
     return buffer8;
 }
-char8_t *EmojiBuilder::encodeUtf8Sequence(
-    const char32_t *emojiCodePoints, size_t length, char8_t *buffer8
-)
+char8_t *
+EmojiBuilder::encodeUtf8Sequence(const char32_t *emojiCodePoints, size_t length, char8_t *buffer8)
 {
     for (size_t i = 0; i < length; ++i)
     {
@@ -69,9 +67,7 @@ EmojiBuilder::EmojiBuilder()
     else
     {
         std::istringstream ss = loadEmojiAssetsFromHardcodedHeader();
-        constructEmojiPropertiesMap(
-            m_emojiPropertiesMap, static_cast<std::istream &>(ss)
-        );
+        constructEmojiPropertiesMap(m_emojiPropertiesMap, static_cast<std::istream &>(ss));
     }
 }
 void EmojiBuilder::constructEmojiPropertiesMap(
@@ -95,8 +91,7 @@ void EmojiBuilder::constructEmojiPropertiesMap(
         {
             continue;
         }
-        else if (line[0] == '#' &&
-                 (line.find("# subgroup:") == std::string::npos) &&
+        else if (line[0] == '#' && (line.find("# subgroup:") == std::string::npos) &&
                  (line.find("# group:") == std::string::npos))
         {
             continue;
@@ -128,9 +123,7 @@ void EmojiBuilder::constructEmojiPropertiesMap(
             {
                 token.erase(
                     std::remove_if(
-                        token.begin(),
-                        token.end(),
-                        [](char c) { return !std::isxdigit(c); }
+                        token.begin(), token.end(), [](char c) { return !std::isxdigit(c); }
                     ),
                     token.end()
                 );
@@ -148,22 +141,18 @@ void EmojiBuilder::constructEmojiPropertiesMap(
             // regular expression for extract unicode version
             std::regex  unicodeRegex(R"((E\d+\.\d+))");
             std::smatch unicodeMatch;
-            if (std::regex_search(
-                    emojiTailDescription, unicodeMatch, unicodeRegex
-                ))
+            if (std::regex_search(emojiTailDescription, unicodeMatch, unicodeRegex))
             {
                 emojiUnicodeVersion = unicodeMatch[0];
                 // pr("\t");pr("Unicode v.: "); pr(unicodeMatch[0]);
             }
 
             // extract emoji text description
-            std::string::size_type unicodeVersionPos =
-                emojiTailDescription.find(unicodeMatch[0]);
+            std::string::size_type unicodeVersionPos = emojiTailDescription.find(unicodeMatch[0]);
             if (unicodeVersionPos != std::string::npos)
             {
                 emojiTextDescription = emojiTailDescription.substr(
-                    unicodeVersionPos + unicodeMatch[0].length() + 1,
-                    emojiTailDescription.size()
+                    unicodeVersionPos + unicodeMatch[0].length() + 1, emojiTailDescription.size()
                 );
                 // pr("\t");pr("Desc.: ");pr(emojiTextDescription);
             }
@@ -171,9 +160,8 @@ void EmojiBuilder::constructEmojiPropertiesMap(
             // combine emoji character from code points
             char8_t buffer[32];
             // Utf8Tools::Utf8Parser utf8tools;
-            char8_t *end = encodeUtf8Sequence(
-                emojiCodePoints.data(), emojiCodePoints.size(), buffer
-            );
+            char8_t *end =
+                encodeUtf8Sequence(emojiCodePoints.data(), emojiCodePoints.size(), buffer);
             *end = '\0'; // Null-terminating the string
             // pr("\t"); pr("Emoji: "); pr(reinterpret_cast<char *>(buffer));
             // br();
@@ -208,8 +196,7 @@ std::ifstream EmojiBuilder::loadEmojiAssetsFromFile()
 {
     // std::string assetFilePath = std::filesystem::current_path().string() +
     // "/assets/emoji-test.txt";
-    std::string assetFilePath =
-        "/home/tomas/dev/cpp/modules/EmojiTools/assets/emoji-test.txt-";
+    std::string   assetFilePath = "/home/tomas/dev/cpp/modules/EmojiTools/assets/emoji-test.txt-";
     std::ifstream is(assetFilePath);
 
     // if (!is)
@@ -218,9 +205,7 @@ std::ifstream EmojiBuilder::loadEmojiAssetsFromFile()
 
     return is;
 }
-std::string EmojiBuilder::getEmojiStringCharByCodePoint(
-    char32_t *emojiCodePoints, size_t length
-)
+std::string EmojiBuilder::getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     if (m_isPopulated)
     {
@@ -232,9 +217,7 @@ std::string EmojiBuilder::getEmojiStringCharByCodePoint(
     else
         return "";
 }
-char8_t EmojiBuilder::getEmojiChar8_tCharByCodePoint(
-    char32_t *emojiCodePoints, size_t length
-)
+char8_t EmojiBuilder::getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     char8_t  buffer[32];
     char8_t *end = encodeUtf8Sequence(emojiCodePoints, length, buffer);
@@ -244,15 +227,12 @@ char8_t EmojiBuilder::getEmojiChar8_tCharByCodePoint(
     return *buffer;
 }
 
-std::string EmojiTransmitter::getEmojiStringCharByCodePoint(
-    char32_t *emojiCodePoints, size_t length
-)
+std::string
+EmojiTransmitter::getEmojiStringCharByCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     return emojiBuilder.getEmojiStringCharByCodePoint(emojiCodePoints, length);
 }
-char8_t EmojiTransmitter::getEmojiChar8_tCharByCodePoint(
-    char32_t *emojiCodePoints, size_t length
-)
+char8_t EmojiTransmitter::getEmojiChar8_tCharByCodePoint(char32_t *emojiCodePoints, size_t length)
 {
     return emojiBuilder.getEmojiChar8_tCharByCodePoint(emojiCodePoints, length);
 }
@@ -292,10 +272,8 @@ std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
     if (emojiBuilder.m_isPopulated)
     {
         int                             count = 0;
-        std::uniform_int_distribution<> dis(
-            1, getSizeOfGroupItems(emojiGroup) - 1
-        );
-        int randomIndex = dis(gen);
+        std::uniform_int_distribution<> dis(1, getSizeOfGroupItems(emojiGroup) - 1);
+        int                             randomIndex = dis(gen);
 
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
@@ -304,8 +282,7 @@ std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
                 if (count == randomIndex)
                 {
                     return emojiBuilder.getEmojiStringCharByCodePoint(
-                        epm.second.m_emojiCodePoints.data(),
-                        epm.second.m_emojiCodePoints.size()
+                        epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                     );
                 }
                 count++;
@@ -314,16 +291,13 @@ std::string EmojiTransmitter::getRandomEmojiFromGroup(std::string emojiGroup)
     }
     return "";
 }
-std::string
-EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
+std::string EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
 {
     if (emojiBuilder.m_isPopulated)
     {
         int                             count = 0;
-        std::uniform_int_distribution<> dis(
-            1, getSizeOfSubGroupItems(emojiSubGroup) - 1
-        );
-        int randomIndex = dis(gen);
+        std::uniform_int_distribution<> dis(1, getSizeOfSubGroupItems(emojiSubGroup) - 1);
+        int                             randomIndex = dis(gen);
 
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
@@ -332,8 +306,7 @@ EmojiTransmitter::getRandomEmojiFromSubGroup(std::string emojiSubGroup)
                 if (count == randomIndex)
                 {
                     return emojiBuilder.getEmojiStringCharByCodePoint(
-                        epm.second.m_emojiCodePoints.data(),
-                        epm.second.m_emojiCodePoints.size()
+                        epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                     );
                 }
                 count++;
@@ -352,8 +325,7 @@ std::string EmojiTransmitter::getEmojiesFromGroup(std::string emojiGroup)
             if (epm.second.m_emojiGroup == emojiGroup)
             {
                 emojis += emojiBuilder.getEmojiStringCharByCodePoint(
-                    epm.second.m_emojiCodePoints.data(),
-                    epm.second.m_emojiCodePoints.size()
+                    epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                 );
             }
         }
@@ -371,8 +343,7 @@ std::string EmojiTransmitter::getEmojiesFromSubGroup(std::string emojiSubGroup)
             if (epm.second.m_emojiSubGroup == emojiSubGroup)
             {
                 emojis += emojiBuilder.getEmojiStringCharByCodePoint(
-                    epm.second.m_emojiCodePoints.data(),
-                    epm.second.m_emojiCodePoints.size()
+                    epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                 );
             }
         }
@@ -388,12 +359,10 @@ std::vector<std::string> EmojiTransmitter::getEmojiGroupsNames()
 
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
-            if (std::find(
-                    vecGroups.begin(), vecGroups.end(), epm.second.m_emojiGroup
-                ) == vecGroups.end())
+            if (std::find(vecGroups.begin(), vecGroups.end(), epm.second.m_emojiGroup) ==
+                vecGroups.end())
             {
-                vecGroups.push_back(epm.second.m_emojiGroup
-                ); // Groups map source
+                vecGroups.push_back(epm.second.m_emojiGroup); // Groups map source
             }
         }
         return vecGroups;
@@ -408,14 +377,10 @@ std::vector<std::string> EmojiTransmitter::getEmojiSubGroupsNames()
 
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
-            if (std::find(
-                    vecSubGroups.begin(),
-                    vecSubGroups.end(),
-                    epm.second.m_emojiSubGroup
-                ) == vecSubGroups.end())
+            if (std::find(vecSubGroups.begin(), vecSubGroups.end(), epm.second.m_emojiSubGroup) ==
+                vecSubGroups.end())
             {
-                vecSubGroups.push_back(epm.second.m_emojiSubGroup
-                ); // SubGroups map source
+                vecSubGroups.push_back(epm.second.m_emojiSubGroup); // SubGroups map source
             }
         }
         return vecSubGroups;
@@ -454,9 +419,7 @@ int EmojiTransmitter::getSizeOfSubGroupItems(std::string emojiSubGroup)
     }
     return 0;
 }
-std::string EmojiTransmitter::getEmojiStringByIndexFromGroup(
-    std::string emojiGroup, int index
-)
+std::string EmojiTransmitter::getEmojiStringByIndexFromGroup(std::string emojiGroup, int index)
 {
     if (emojiBuilder.m_isPopulated)
     {
@@ -468,8 +431,7 @@ std::string EmojiTransmitter::getEmojiStringByIndexFromGroup(
                 if (count == index)
                 {
                     return emojiBuilder.getEmojiStringCharByCodePoint(
-                        epm.second.m_emojiCodePoints.data(),
-                        epm.second.m_emojiCodePoints.size()
+                        epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                     );
                 }
                 count++;
@@ -478,9 +440,8 @@ std::string EmojiTransmitter::getEmojiStringByIndexFromGroup(
     }
     return "";
 }
-std::string EmojiTransmitter::getEmojiStringByIndexFromSubGroup(
-    std::string emojiSubGroup, int index
-)
+std::string
+EmojiTransmitter::getEmojiStringByIndexFromSubGroup(std::string emojiSubGroup, int index)
 {
     if (emojiBuilder.m_isPopulated)
     {
@@ -492,8 +453,7 @@ std::string EmojiTransmitter::getEmojiStringByIndexFromSubGroup(
                 if (count == index)
                 {
                     return emojiBuilder.getEmojiStringCharByCodePoint(
-                        epm.second.m_emojiCodePoints.data(),
-                        epm.second.m_emojiCodePoints.size()
+                        epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                     );
                 }
                 count++;
@@ -514,21 +474,18 @@ std::string EmojiTransmitter::getEmojiGroupDescription(std::string emojiGroup)
             {
                 ss << "Emoji: "
                    << getEmojiStringCharByCodePoint(
-                          epm.second.m_emojiCodePoints.data(),
-                          epm.second.m_emojiCodePoints.size()
+                          epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                       )
                    << "\t Group: " << epm.second.m_emojiGroup
                    << " | Subgroup: " << epm.second.m_emojiSubGroup
                    << " | Description: " << epm.second.m_emojiTextDescription
-                   << " | Unicode version: " << epm.second.m_emojiUnicodeVersion
-                   << std::endl;
+                   << " | Unicode version: " << epm.second.m_emojiUnicodeVersion << std::endl;
             }
         }
     }
     return ss.str();
 }
-std::string
-EmojiTransmitter::getEmojiSubGroupDescription(std::string emojiSubGroup)
+std::string EmojiTransmitter::getEmojiSubGroupDescription(std::string emojiSubGroup)
 {
     std::stringstream ss;
 
@@ -540,14 +497,12 @@ EmojiTransmitter::getEmojiSubGroupDescription(std::string emojiSubGroup)
             {
                 ss << "Emoji: "
                    << getEmojiStringCharByCodePoint(
-                          epm.second.m_emojiCodePoints.data(),
-                          epm.second.m_emojiCodePoints.size()
+                          epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                       )
                    << "\t Group: " << epm.second.m_emojiGroup
                    << " | Subgroup: " << epm.second.m_emojiSubGroup
                    << " | Description: " << epm.second.m_emojiTextDescription
-                   << " | Unicode version: " << epm.second.m_emojiUnicodeVersion
-                   << std::endl;
+                   << " | Unicode version: " << epm.second.m_emojiUnicodeVersion << std::endl;
             }
         }
     }
@@ -563,8 +518,7 @@ void EmojiTransmitter::printEmojiGroup(std::string emojiGroup)
             if (epm.second.m_emojiGroup == emojiGroup)
             {
                 getEmojiChar8_tCharByCodePoint(
-                    epm.second.m_emojiCodePoints.data(),
-                    epm.second.m_emojiCodePoints.size()
+                    epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                 );
             }
         }
@@ -580,8 +534,7 @@ void EmojiTransmitter::printEmojiSubGroup(std::string emojiSubGroup)
             if (epm.second.m_emojiSubGroup == emojiSubGroup)
             {
                 getEmojiChar8_tCharByCodePoint(
-                    epm.second.m_emojiCodePoints.data(),
-                    epm.second.m_emojiCodePoints.size()
+                    epm.second.m_emojiCodePoints.data(), epm.second.m_emojiCodePoints.size()
                 );
             }
         }
@@ -594,9 +547,7 @@ void EmojiTransmitter::printGroupsText()
         std::vector<std::string> groups;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
-            if (std::find(
-                    groups.begin(), groups.end(), epm.second.m_emojiGroup
-                ) == groups.end())
+            if (std::find(groups.begin(), groups.end(), epm.second.m_emojiGroup) == groups.end())
             {
                 groups.push_back(epm.second.m_emojiGroup);
             }
@@ -616,11 +567,8 @@ void EmojiTransmitter::printSubGroupsText()
         std::vector<std::string> subgroups;
         for (auto &epm : emojiBuilder.m_emojiPropertiesMap)
         {
-            if (std::find(
-                    subgroups.begin(),
-                    subgroups.end(),
-                    epm.second.m_emojiSubGroup
-                ) == subgroups.end())
+            if (std::find(subgroups.begin(), subgroups.end(), epm.second.m_emojiSubGroup) ==
+                subgroups.end())
             {
                 subgroups.push_back(epm.second.m_emojiSubGroup);
             }
