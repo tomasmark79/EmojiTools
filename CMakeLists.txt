@@ -66,7 +66,6 @@ file(
     ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cxx)
 
-<<<<<<< HEAD
 # ==============================================================================
 # Create target
 # ==============================================================================
@@ -76,14 +75,6 @@ target_sources(${LIBRARY_NAME} PRIVATE ${headers} ${sources})
 # ==============================================================================
 # Set headers
 # ==============================================================================
-=======
-# ---- Create library ----
-add_library(${PROJECT_LIBRARY_NAME} ${headers} ${sources})
-
-# ---- Library features ----
-target_compile_features(${PROJECT_LIBRARY_NAME} PUBLIC cxx_std_17)
-
->>>>>>> af046ef9dfd44fb91359df8d8ac4ee5433d4ea6a
 # header-only libraries change all PUBLIC flags to INTERFACE and create an interface target:
 # <add_library(${LIBRARY_NAME} INTERFACE)>
 target_include_directories(
@@ -97,7 +88,6 @@ target_include_directories(
 # ==============================================================================
 # note: generator expressions are evaluated during generation of the buildsystem, and not during processing of CMakeLists.txt files
 target_compile_options(
-<<<<<<< HEAD
     ${LIBRARY_NAME}
     PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive-;/W4>"
     PUBLIC
@@ -105,11 +95,6 @@ target_compile_options(
     PUBLIC
         "$<$<AND:$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>,$<PLATFORM_ID:Darwin>>:-Wall;-Wextra;-Wpedantic>"
 )
-=======
-    ${PROJECT_LIBRARY_NAME}
-    PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/W4;/permissive->"
-    "$<$<NOT:$<COMPILE_LANG_AND_ID:CXX,MSVC>>:-Wall;-Wextra;-Wpedantic;-MMD;-MP>")
->>>>>>> af046ef9dfd44fb91359df8d8ac4ee5433d4ea6a
 
 # ==============================================================================
 # Set compile features
