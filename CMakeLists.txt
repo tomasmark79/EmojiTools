@@ -99,7 +99,7 @@ target_compile_options(
 # ==============================================================================
 # Set compile features
 # ==============================================================================
-target_compile_features(${LIBRARY_NAME} PUBLIC cxx_std_14)
+target_compile_features(${LIBRARY_NAME} PUBLIC cxx_std_17)
 
 # ==============================================================================
 # Set linking
