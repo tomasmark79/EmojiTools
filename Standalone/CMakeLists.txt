@@ -5,7 +5,26 @@ cmake_policy(SET CMP0091 NEW)
 # ==============================================================================
 # Static or shared compiling
 # ==============================================================================
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+# Inherit from parent project or set default if built standalone
+if(NOT DEFINED BUILD_SHARED_LIBS)
+    option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+endif()
+
+if(NOT DEFINED USE_STATIC_RUNTIME)
+    option(USE_STATIC_RUNTIME "Link against static runtime libraries" OFF)
+endif()
+
+if(USE_STATIC_RUNTIME)
+    if(MSVC)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
+    endif()
+    
+    if(UNIX)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -pthread")
+    endif()
+endif()
 
 # Linting C/C++ code
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -38,7 +57,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 # ==============================================================================
 include(../cmake/tools.cmake)
 include(../cmake/CPM.cmake)
-CPMAddPackage(NAME EmojiTools SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+CPMAddPackage(NAME VCMLib SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+cpm_licenses_create_disclaimer_target(
+    write-licenses-${STANDALONE_NAME}
+    "${CMAKE_CURRENT_BINARY_DIR}/${STANDALONE_NAME}_third_party.txt" "${CPM_PACKAGES}")
 
 # ==============================================================================
 # Source and header files Glob not recommended, but the simplest way for this template

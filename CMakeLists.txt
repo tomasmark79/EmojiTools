@@ -5,8 +5,27 @@ cmake_policy(SET CMP0091 NEW)
 # ==============================================================================
 # Static or shared compiling
 # ==============================================================================
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
-# Linting C/C++ code
+# Inherit from parent project or set default if built standalone
+if(NOT DEFINED BUILD_SHARED_LIBS)
+    option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+endif()
+
+if(NOT DEFINED USE_STATIC_RUNTIME)
+    option(USE_STATIC_RUNTIME "Link against static runtime libraries" OFF)
+endif()
+
+if(USE_STATIC_RUNTIME)
+    if(MSVC)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
+    endif()
+    
+    if(UNIX)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -pthread")
+    endif()
+endif()
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ==============================================================================
@@ -17,7 +36,7 @@ string(TOLOWER "${LIBRARY_NAME}" LIBRARY_NAME_LOWER)
 set(LIBRARY_NAMESPACE dsdotname)
 project(
     ${LIBRARY_NAME}
-    VERSION 0.0.1
+    VERSION 0.0.2
     LANGUAGES C CXX
     DESCRIPTION "template Copyright (c) 2024 TomasMark [at] digitalspace.name"
     HOMEPAGE_URL "https://github.com/tomasmark79")
@@ -34,7 +53,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 find_package(ZLIB REQUIRED)
 find_package(fmt REQUIRED)
-#find_package(nlohmann_json REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 # ==============================================================================
 # CPM.cmake dependencies - take care conflicts
@@ -44,7 +63,8 @@ include(cmake/CPM.cmake)
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.12.0")
 CPMAddPackage("gh:cpm-cmake/CPMLicenses.cmake@0.0.7")
 cpm_licenses_create_disclaimer_target(
-    write-licenses-${LIBRARY_NAME} "${CMAKE_CURRENT_BINARY_DIR}/third_party.txt" "${CPM_PACKAGES}")
+    write-licenses-${LIBRARY_NAME} "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}_third_party.txt"
+    "${CPM_PACKAGES}")
 
 # ==============================================================================
 # Source and header files Glob not recommended, but the simplest way for this template
@@ -99,7 +119,10 @@ target_compile_options(
 # ==============================================================================
 # Set compile features
 # ==============================================================================
-target_compile_features(${LIBRARY_NAME} PUBLIC cxx_std_17)
+target_compile_features(${LIBRARY_NAME} PUBLIC cxx_std_14)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # ==============================================================================
 # Set linking
@@ -108,8 +131,7 @@ target_link_libraries(
     ${LIBRARY_NAME}
     PRIVATE ZLIB::ZLIB
     PRIVATE fmt::fmt
-    #PRIVATE nlohmann_json::nlohmann_json
-)
+    PRIVATE nlohmann_json::nlohmann_json)
 
 # ==============================================================================
 # set packageProject arttributes
@@ -121,7 +143,7 @@ packageProject(
     INCLUDE_DIR "/include"
     INCLUDE_DESTINATION include/${LIBRARY_NAME_LOWER}-${PROJECT_VERSION}
     INCLUDE_HEADER_PATTERN "*.h;*.hpp;*.hh;*.hxx"
-    DEPENDENCIES "fmt#11.0.2;CPMLicenses.cmake@0.0.7;zlib#1.2.11"
+    DEPENDENCIES "zlib#1.2.11;fmt#11.1.1;CPMLicenses.cmake@0.0.7;nlohmann_json#3.11.2"
     VERSION_HEADER "${LIBRARY_NAME_LOWER}/version.h"
     EXPORT_HEADER "${LIBRARY_NAME_LOWER}/export.h"
     NAMESPACE ${LIBRARY_NAMESPACE}
