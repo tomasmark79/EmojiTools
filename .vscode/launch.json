@@ -1,12 +1,11 @@
 {
-    /* (c) Tomáš Mark 2024 */
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Standalone Target",
+            "name": "Debug Default Standalone",
             "type": "cppdbg",
-            "request": "launch", /*🪲*/
-            "program": "${workspaceFolder}/Build/Standalone/default/Debug/EmojiToolsStandalone", 
+            "request": "launch",
+            "program": "${workspaceFolder}/Build/Standalone/default/Debug/EmojiToolsStandalone",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -20,13 +19,21 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "preLaunchTask": "Direct Build"
+        },
+        {
+            "name": "Debug CMake configuration",
+            "type": "cmake",
+            "request": "launch",
+            "pipeName": "",
+            "cmakeDebugType": "external"
         },
         {
             "name": "Debug RelWithDebInfo Standalone Target",
             "type": "cppdbg",
-            "request": "launch", /*🪲*/
-            "program": "${workspaceFolder}/Build/Standalone/default/RelWithDebInfo/VCMController",
+            "request": "launch",
+            "program": "${workspaceFolder}/Build/Standalone/default/RelWithDebInfo/EmojiToolsStandalone",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -40,8 +47,8 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "preLaunchTask": "Direct Build"
         }
-
     ]
 }
